@@ -1,9 +1,65 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
-</ion-content>
+    <img src="url" alt="SCTR Logo" />
+    <h5>Registrate aquí</h5>
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+        <ion-item>
+            <ion-input formControlName="fullName"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input formControlName="idCard"></ion-input>
+            </ion-item>
+      <ion-item>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <div class="validation-error">
+        <ng-container *ngFor="let validation of validation_messages.email">
+          <div
+            *ngIf="
+              loginForm.get('email').hasError(validation.type) &&
+                (loginForm.get('email').dirty ||
+              loginForm.get('email').touched)
+            "
+          >
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <ion-item>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <div class="validation-error">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div
+            *ngIf="
+              loginForm.get('password').hasError(validation.type) &&
+              (loginForm.get('password').dirty ||
+                loginForm.get('password').touched)
+            "
+          >
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+        <a href="#">
+          ¿Olvidaste tu contraseña?
+        </a>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="full" color="medium"
+            href="/register"
+            >INICIAR SESIÓN</ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="full" color="success"
+            [disabled]="!loginForm.valid"
+            type="submit"
+            >REGISTRAR</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  
+    </form>
+  
+  </ion-content>
+  

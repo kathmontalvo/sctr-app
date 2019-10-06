@@ -1,10 +1,58 @@
 <ion-content>
-  <img src="url" alt="SCTR Logo">
+  <img src="url" alt="SCTR Logo" />
   <h5>Ingresa a tu cuenta</h5>
   <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
     <ion-item>
-      <ion-label>Email</ion-label>
-      <ion-input formControlName="email"></ion-input>
+      <ion-input type="email" formControlName="email"></ion-input>
     </ion-item>
+    <div class="validation-error">
+      <ng-container *ngFor="let validation of validation_messages.email">
+        <div
+          *ngIf="
+            loginForm.get('email').hasError(validation.type) &&
+              (loginForm.get('email').dirty ||
+            loginForm.get('email').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <div class="validation-error">
+      <ng-container *ngFor="let validation of validation_messages.password">
+        <div
+          *ngIf="
+            loginForm.get('password').hasError(validation.type) &&
+            (loginForm.get('password').dirty ||
+              loginForm.get('password').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+      <a href="#">
+        ¿Olvidaste tu contraseña?
+      </a>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" color="medium"
+          href="/register"
+          >CREAR CUENTA</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="success"
+          [disabled]="!loginForm.valid"
+          type="submit"
+          >INGRESAR</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
   </form>
+
 </ion-content>
