@@ -1,0 +1,7 @@
+{
+  "appId": "sctr.app.com",
+  "appName": "SCTR App",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
