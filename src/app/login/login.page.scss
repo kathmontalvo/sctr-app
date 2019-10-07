@@ -1,3 +1,53 @@
-ion-input{
-    --background: var(--ion-color-medium)
+ion-content {
+  --background: var(--ion-color-success);
+  .main-content {
+    background: var(--ion-color-white);
+    border-radius: 5px;
+    margin-top: 3em;
+    .app-name {
+      font-size: 2.5em;
+      ion-icon {
+        color: var(--ion-color-success);
+      }
+      span {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+    }
+    form {
+      .ion-color-medium {
+        --ion-color-shade: none !important;
+      }
+      ion-item {
+        --border-radius: 5px;
+        --ion-color-base: var(--ion-color-medium-input-bg) !important;
+
+        ion-input {
+          --placeholder-color: var(--ion-color-medium-dark);
+          color: var(--ion-color-dark);
+        }
+      }
+      a {
+        color: var(--ion-color-medium-dark);
+      }
+      a:focus {
+        color: var(--ion-color-success);
+      }
+
+      ion-grid {
+        ion-button {
+          --border-radius: 5px;
+          --background: var(--ion-color-medium);
+          --ion-color-shade: none !important;
+        }
+        .ion-color-medium {
+          --ion-color-contrast: var(--ion-color-medium-dark) !important;
+        }
+      }
+    }
+  }
+  .bottom-content {
+    bottom: -1.5em;
+    position: relative;
+  }
 }

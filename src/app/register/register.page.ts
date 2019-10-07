@@ -8,7 +8,7 @@ import {Router} from '@angular/router'
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-  loginForm: FormGroup;
+  registerForm: FormGroup;
   validation_messages = {
     email:[
       { type: 'required', message: 'El email es requerido'},
@@ -21,7 +21,7 @@ export class RegisterPage implements OnInit {
   };
 
   constructor(private formBuilder: FormBuilder, private router: Router) {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       fullName: new FormControl("", Validators.compose([
         Validators.required,
       ])), 
