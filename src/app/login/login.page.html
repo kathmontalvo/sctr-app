@@ -11,40 +11,28 @@
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
       <ion-item color="medium" class="ion-margin-bottom">
-        <ion-input
-          type="email"
-          formControlName="email"
-          placeholder="Ingresa tu mail"
-        ></ion-input>
+        <ion-input type="email" formControlName="email" placeholder="Ingresa tu mail"></ion-input>
       </ion-item>
       <div class="validation-error">
         <ng-container *ngFor="let validation of validation_messages.email">
-          <div
-            *ngIf="
+          <div *ngIf="
               loginForm.get('email').hasError(validation.type) &&
               (loginForm.get('email').dirty || loginForm.get('email').touched)
-            "
-          >
+            ">
             {{ validation.message }}
           </div>
         </ng-container>
       </div>
       <ion-item color="medium">
-        <ion-input
-          type="password"
-          formControlName="password"
-          placeholder="Ingresa tu contraseña"
-        ></ion-input>
+        <ion-input type="password" formControlName="password" placeholder="Ingresa tu contraseña"></ion-input>
       </ion-item>
       <div class="validation-error">
         <ng-container *ngFor="let validation of validation_messages.password">
-          <div
-            *ngIf="
+          <div *ngIf="
               loginForm.get('password').hasError(validation.type) &&
               (loginForm.get('password').dirty ||
                 loginForm.get('password').touched)
-            "
-          >
+            ">
             {{ validation.message }}
           </div>
         </ng-container>
@@ -57,18 +45,10 @@
       <ion-grid class="ion-no-padding">
         <ion-row>
           <ion-col size="6" class="ion-no-padding">
-            <ion-button expand="block" color="medium" href="/register"
-              >CREAR CUENTA</ion-button
-            >
+            <ion-button expand="block" color="medium" href="/register">CREAR CUENTA</ion-button>
           </ion-col>
           <ion-col size="6" class="ion-no-padding">
-            <ion-button
-              expand="block"
-              color="success"
-              [disabled]="!loginForm.valid"
-              type="submit"
-              >INGRESAR</ion-button
-            >
+            <ion-button expand="block" color="success" [disabled]="!loginForm.valid" type="submit">INGRESAR</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -78,6 +58,9 @@
     <ion-text color="light">
       <p>Tu seguro siempre contigo</p>
     </ion-text>
-    <ion-img [src]="item - src" alt="Logo"></ion-img>
+    <ion-text color="light">
+      <p>LOGO INSURED</p>
+    </ion-text>
+    <!-- <ion-img [src]="src" alt="Logo"></ion-img> -->
   </section>
 </ion-content>
