@@ -1,1 +1,24 @@
-
+ion-content {
+  --background: #f8fafb;
+  .profile-img {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  ion-segment-button {
+    ion-label {
+      font-size: 10px;
+    }
+  }
+  ion-list {
+    background: none;
+  }
+}
+ion-footer {
+  background-color: #f8fafb;
+  justify-content: center;
+  display: flex;
+  img {
+    width: 50%;
+  }
+}
