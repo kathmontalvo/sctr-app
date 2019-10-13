@@ -9,10 +9,14 @@
       </ion-col>
       <ion-col size="3" class="profile-img">
         <ion-thumbnail class="ion-no-margin">
-          <img src="{{ user.img }}" alt="User avatar" />
+          <img
+            src="{{ user.img }}"
+            alt="User avatar"
+            [routerLink]="['/profile']"
+          />
         </ion-thumbnail>
         <ion-label>
-          <p>Ver perfil</p>
+          <p [routerLink]="['/profile']">Ver perfil</p>
         </ion-label>
       </ion-col>
     </ion-row>
