@@ -20,21 +20,17 @@ ion-header {
 }
 ion-content {
   --background: var(--ion-color-light);
-  .upload {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30%;
-    background-color: white;
-    margin-bottom: 1em;
-    border: dashed;
-    border-color: #e8ecef;
+
+  ion-segment-button {
+    font-size: 10px;
   }
-  ion-item {
-    padding-left: 0.8em;
-    padding-right: 0.8em;
-    .margin-start {
-      margin-left: -60px;
+  ion-list {
+    ion-item {
+      padding-left: 0.8em;
+      padding-right: 0.8em;
+      .margin-start {
+        margin-left: -60px;
+      }
     }
   }
 }

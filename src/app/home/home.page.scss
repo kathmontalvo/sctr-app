@@ -1,5 +1,5 @@
 ion-content {
-  --background: #f8fafb;
+  --background: var(--ion-color-light);
   .profile-img {
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@ ion-content {
   }
 }
 ion-footer {
-  background-color: #f8fafb;
+  background-color: var(--ion-color-light);
   justify-content: center;
   display: flex;
   img {

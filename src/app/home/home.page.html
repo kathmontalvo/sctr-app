@@ -23,7 +23,7 @@
   </ion-grid>
   <div class="ion-padding">grafico</div>
   <div class="ion-padding">
-    <ion-segment (ionChange)="segmentChanged($event)" color="success">
+    <ion-segment (ionChange)="segmentChanged($event)" color="success" mode="md">
       <ion-segment-button value="insure" checked>
         <ion-label>
           MIS SEGUROS
@@ -48,7 +48,7 @@
           <h2>{{ insureType.title }}</h2>
           <p>{{ insureType.date }}</p>
         </ion-label>
-        <ion-button color="success">
+        <ion-button color="success" href="/insurance">
           Ver más
         </ion-button>
       </ion-item>
