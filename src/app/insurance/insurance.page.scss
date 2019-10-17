@@ -25,9 +25,8 @@ ion-content {
     font-size: 10px;
   }
   ion-list {
+      background: none;
     ion-item {
-      padding-left: 0.8em;
-      padding-right: 0.8em;
       .margin-start {
         margin-left: -60px;
       }
