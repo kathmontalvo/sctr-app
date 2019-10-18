@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-insurance',
@@ -10,7 +11,7 @@ export class InsurancePage implements OnInit {
   sctrType: object;
   users: object[];
   companies: object[];
-  constructor() {}
+  constructor(public modalCtrl: ModalController) {}
 
   ngOnInit() {
     this.userInfo = {
@@ -100,4 +101,6 @@ export class InsurancePage implements OnInit {
       }
     ];
   }
+
+  openModal() {}
 }
