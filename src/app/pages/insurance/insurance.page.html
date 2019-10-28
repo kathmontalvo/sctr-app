@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        [icon]="buttonIcon"
+        defaultHref="/home"
+        text=""
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title color="white" class="ion-text-center">
+      {{ sctrType.name }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-avatar>
+        <img src="{{ userInfo.img }}" alt="Foto de perfil" />
+      </ion-avatar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment
+    color="success"
+    value="details"
+    class="ion-padding"
+    [(ngModel)]="segment"
+  >
+    <ion-segment-button value="details">
+      <ion-label>DETALLE</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pdf">
+      <ion-label>PDF</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="insuranced">
+      <ion-label>ASEGURADOS</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="register">
+      <ion-label>REGISTRO</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="ion-padding-horizontal" [ngSwitch]="segment">
+    <div *ngSwitchCase="'details'">
+      <div style="text-align:center">
+        <!-- <input
+          type="text"
+          placeholder="Enter name to generate QR Code"
+          [(ngModel)]="qrcodename"
+        /><br />
+        <button (click)="generateQRCode()">Generate QR Code</button> -->
+        <ngx-qrcode
+          *ngIf="display"
+          id="qrCodeImage"
+          [qrc-element-type]="elementType"
+          [qrc-value]="value"
+        >
+        </ngx-qrcode>
+        <!-- <br />
+        <a [href]="href" *ngIf="display" (click)="downloadImage()" download
+          >Download Image</a
+        > -->
+      </div>
+
+      <ion-list>
+        <ion-list-header class="ion-no-padding" color="light">
+          Información personal
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>
+            <h3>Asegurador</h3>
+            <p>Pacífico</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Asegurador</h3>
+            <p>Pacífico</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Asegurador</h3>
+            <p>Pacífico</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Asegurador</h3>
+            <p>Pacífico</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Asegurador</h3>
+            <p>Pacífico</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Asegurador</h3>
+            <p>Pacífico</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    <iframe
+      src="../../assets/prueba.pdf"
+      type="application/pdf"
+      width="100%"
+      height="600px"
+      *ngSwitchCase="'pdf'"
+    >
+    </iframe>
+    <ion-list *ngSwitchCase="'insuranced'">
+      <ion-item
+        *ngFor="let user of users"
+        class="ion-margin-vertical"
+        lines="none"
+      >
+        <ion-avatar>
+          <img src="{{ user.img }}" alt="user image" />
+        </ion-avatar>
+        <ion-label class="ion-padding-start">
+          <h2>{{ user.name }}</h2>
+          <p>Del {{ user.dateInit }} al {{ user.dateEnd }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'register'">
+      <ion-item
+        *ngFor="let company of companies"
+        class="ion-margin-vertical"
+        lines="none"
+      >
+        <ion-avatar>
+          <img src="{{ company.img }}" alt="user image" />
+        </ion-avatar>
+        <ion-label class="ion-padding-start">
+          <h2>{{ company.name }}</h2>
+          <p>Planta {{ company.place }}</p>
+        </ion-label>
+        <ion-button color="success" (click)="openRegister()">
+          Ver registro
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
