@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { AuthService } from "./auth.service";
-import { Observable } from "rxjs/internal/Observable";
-import { map } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DataQrService {
   data: Observable<any>;
@@ -13,11 +13,11 @@ export class DataQrService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   headers: HttpHeaders = new HttpHeaders({
-    Authorization: "Bearer " + this.authService.getToken()
+    Authorization: 'Bearer ' + this.authService.getItem('access_token')
   });
 
   getData() {
-    const url = "URL_AQUÍ";
+    const url = 'URL_AQUÍ';
     return (this.data = this.http.get(url, { headers: this.headers }));
   }
 }

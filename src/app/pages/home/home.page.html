@@ -4,17 +4,13 @@
       <ion-col size="9">
         <ion-label>
           <h2>¡Hola!</h2>
-          <h1>{{ user.name }}</h1>
+          <h1>{{ user.name }} {{ user.lastname }}</h1>
         </ion-label>
       </ion-col>
       <ion-col size="3" class="profile-img">
-        <ion-thumbnail class="ion-no-margin">
-          <img
-            src="{{ user.img }}"
-            alt="User avatar"
-            [routerLink]="['/profile']"
-          />
-        </ion-thumbnail>
+        <ion-avatar class="ion-no-margin">
+          <img src="{{ user.image }}" alt="User avatar" [routerLink]="['/profile']" />
+        </ion-avatar>
         <ion-label>
           <p [routerLink]="['/profile']">Ver perfil</p>
         </ion-label>
@@ -37,11 +33,7 @@
     </ion-segment>
     <div [ngSwitch]="segment">
       <ion-list *ngSwitchCase="'insure'">
-        <ion-item
-          class="ion-margin-vertical"
-          *ngFor="let insureType of insureTypes"
-          lines="none"
-        >
+        <ion-item class="ion-margin-vertical" *ngFor="let insureType of insureTypes" lines="none">
           <ion-avatar>
             <img src="{{ insureType.img }}" />
           </ion-avatar>
@@ -55,11 +47,7 @@
         </ion-item>
       </ion-list>
       <ion-list *ngSwitchCase="'shared-insure'">
-        <ion-item
-          class="ion-margin-vertical"
-        *ngFor="let insureType of sharedInsureTypes"
-          lines="none"
-        >
+        <ion-item class="ion-margin-vertical" *ngFor="let insureType of sharedInsureTypes" lines="none">
           <ion-avatar>
             <img src="{{ insureType.img }}" />
           </ion-avatar>
@@ -76,8 +64,5 @@
   </div>
 </ion-content>
 <ion-footer class="ion-padding-vertical">
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Ionic_Logo.svg"
-    alt="Logo"
-  />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Ionic_Logo.svg" alt="Logo" />
 </ion-footer>
