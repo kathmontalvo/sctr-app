@@ -1,4 +1,4 @@
-package sctr.app.com;
+package io.ionic.starter;
 
 import android.os.Bundle;
 

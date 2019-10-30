@@ -1,6 +1,6 @@
 {
-  "appId": "sctr.app.com",
-  "appName": "SCTR App",
+  "appId": "io.ionic.starter",
+  "appName": "sctr-app",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www"

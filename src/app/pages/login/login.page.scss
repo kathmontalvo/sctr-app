@@ -5,13 +5,8 @@ ion-content {
     border-radius: 5px;
     margin-top: 3em;
     .app-name {
-      font-size: 2.5em;
-      ion-icon {
-        color: var(--ion-color-success);
-      }
-      span {
-        font-size: 1.2em;
-        font-weight: bold;
+      img {
+        width: 70%;
       }
     }
     form {
@@ -49,5 +44,10 @@ ion-content {
   .bottom-content {
     bottom: -1.5em;
     position: relative;
+    ion-text {
+      img {
+        filter: invert(100%)
+      }
+    }
   }
 }

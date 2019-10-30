@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   headers: HttpHeaders = new HttpHeaders({
-    'Content-type': 'application/json'
+    'Content-Type': 'application/x-www-form-urlencoded'
   });
 
   login(grant_type: string, client_id: string, client_secret: string, username: string, password: string): Observable<any> {

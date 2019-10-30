@@ -2,8 +2,10 @@
   <section class="ion-padding main-content">
     <div class="ion-padding ion-text-center">
       <div class="app-name">
-        <ion-icon name="cube"></ion-icon>
-        <span> SCTR</span>
+        <img src="../../../assets/imgs/logo_sctr.png" alt="Logo SCTR" />
+
+        <!-- <ion-icon name="cube"></ion-icon>
+        <span> SCTR</span> -->
       </div>
       <ion-text color="dark">
         <h5>Ingresa a tu cuenta</h5>
@@ -11,7 +13,7 @@
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
       <ion-item color="medium" class="ion-margin-bottom">
-        <ion-input type="email" formControlName="email" placeholder="Ingresa tu mail" value="jrevilla492@gmail.com"></ion-input>
+        <ion-input type="email" formControlName="email" placeholder="Ingresa tu mail"></ion-input>
       </ion-item>
       <div class="validation-error">
         <ng-container *ngFor="let validation of validation_messages.email">
@@ -21,7 +23,7 @@
         </ng-container>
       </div>
       <ion-item color="medium">
-        <ion-input type="password" formControlName="password" placeholder="Ingresa tu contraseña" value="Seguridad_123"></ion-input>
+        <ion-input type="password" formControlName="password" placeholder="Ingresa tu contraseña"></ion-input>
       </ion-item>
       <div class="validation-error">
         <ng-container *ngFor="let validation of validation_messages.password">
@@ -52,8 +54,7 @@
       <p>Tu seguro siempre contigo</p>
     </ion-text>
     <ion-text color="light">
-      <p>LOGO INSURED</p>
+      <img src="../../../assets/imgs/logo_insured.png" alt="Logo Insured" />
     </ion-text>
-    <!-- <ion-img [src]="src" alt="Logo"></ion-img> -->
   </section>
 </ion-content>
