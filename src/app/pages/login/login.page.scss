@@ -1,5 +1,5 @@
 ion-content {
-  --background: var(--ion-color-success);
+  --background: var(--ion-color-success) url("../../../assets/imgs/bg_login.png") no-repeat fixed center;
   .main-content {
     background: var(--ion-color-white);
     border-radius: 5px;

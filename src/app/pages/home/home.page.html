@@ -17,7 +17,26 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div class="ion-padding">grafico</div>
+
+  <div class="ion-padding chart-card">
+    <ion-label> Rendimiento </ion-label>
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4" class="col-1-chart">
+            <h2 class="ion-no-margin">
+              120
+            </h2>
+            <p class="ion-no-margin">Días en planta</p>
+          </ion-col>
+          <ion-col size="8">
+            <canvas #barCanvas></canvas>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
   <div class="ion-padding">
     <ion-segment [(ngModel)]="segment" color="success" mode="md">
       <ion-segment-button value="insure" checked>
@@ -62,7 +81,7 @@
       </ion-list>
     </div>
   </div>
+  <div class=" ion-justify-content-center footer-logo">
+    <img src="../../../assets/imgs/logo_insured.png" alt="Logo Insured" />
+  </div>
 </ion-content>
-<ion-footer class="ion-padding-vertical">
-  <img src="../../../assets/imgs/logo_insured.png" alt="Logo Insured" />
-</ion-footer>
