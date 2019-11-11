@@ -119,6 +119,7 @@ export class InsurancePage implements OnInit {
     const popover = await this.popOverCtrl.create({
       component: PopoverComponent,
       event: ev,
+      cssClass: 'popover-style',
       translucent: true
     });
     return await popover.present();

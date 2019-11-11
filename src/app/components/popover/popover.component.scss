@@ -1,14 +1,27 @@
-ion-popover {
-  .popover-wrapper {
-    .popover-content {
-      //   top: 5% !important;
-      //   left: 5% !important;
-      height: 80vh !important;
-      width: 90% !important;
+ion-content {
+  ion-title {
+    margin-bottom: 2.5rem;
+  }
+  ion-card {
+    ion-card-header {
+      display: flex;
+      ion-title {
+        padding-left: 0;
+      }
     }
   }
-}
-
-ion-title {
-  font-weight: bolder;
+  form {
+    display: flex;
+    flex-direction: column;
+    textarea {
+      padding: 12px;
+      border-radius: 10px;
+    }
+    textarea:focus {
+      outline: none;
+    }
+    ion-button {
+      align-self: flex-end;
+    }
+  }
 }

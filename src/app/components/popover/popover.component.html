@@ -1,16 +1,46 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Registro de entrada y salida</ion-title>
-    <ion-icon name="close" (click)="onClick()"></ion-icon>
-  </ion-toolbar>
-</ion-header>
 <ion-content>
-  <div>
-    <button>Registrar entrada</button>
-  </div>
-  <ion-list>
-    <ion-item>
-      Entrada Salida
-    </ion-item>
-  </ion-list>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-icon size="large" name="close" (click)="onClick()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-title>Registro de entrada y salida</ion-title>
+  <ion-card class="ion-margin-vertical">
+    <ion-card-header>
+      <ion-title>Hoy</ion-title>
+      <ion-button color="success">Registrar entrada</ion-button>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Entrada: <span>HORa</span></p>
+      <p>Salida: <span>HORa</span></p>
+
+      <form class="ion-margin-vertical">
+        <textarea
+          name="comment"
+          id="comment"
+          cols="40"
+          rows="4"
+          placeholder="Añadir un comentario"
+        ></textarea>
+        <ion-button color="light">Enviar</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Madison, WI</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Entrada: <span>HORA</span> Salida: <span>HORA</span>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Madison, WI</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Entrada: <span>HORA</span> Salida: <span>HORA</span>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
