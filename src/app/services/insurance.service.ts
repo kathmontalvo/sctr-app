@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from './auth.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataQrService {
+export class InsuranceService {
   data: Observable<any>;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -16,8 +16,8 @@ export class DataQrService {
     Authorization: 'Bearer ' + this.authService.getItem('access_token')
   });
 
-  getData() {
-    const url = 'URL_AQUÍ';
+  getInsurances() {
+    const url = 'http://adm.sctr-insured.com.pe/api/user/home';
     return (this.data = this.http.get(url, { headers: this.headers }));
   }
 }

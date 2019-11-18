@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DataQrService } from './data-qr.service';
+import { InsuranceService } from './insurance.service';
 
-describe('DataQrService', () => {
+describe('InsuranceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DataQrService = TestBed.get(DataQrService);
+    const service: InsuranceService = TestBed.get(InsuranceService);
     expect(service).toBeTruthy();
   });
 });

@@ -52,13 +52,13 @@
     </ion-segment>
     <div [ngSwitch]="segment">
       <ion-list *ngSwitchCase="'insure'">
-        <ion-item class="ion-margin-vertical" *ngFor="let insureType of insureTypes" lines="none">
+        <ion-item class="ion-margin-vertical" *ngFor="let insuranceType of insuranceTypes" lines="none">
           <ion-avatar>
-            <img src="{{ insureType.img }}" />
+            <img src="{{ insuranceType.insurence.insucompany.image }}" />
           </ion-avatar>
           <ion-label class="ion-padding-start">
-            <h2>{{ insureType.title }}</h2>
-            <p>{{ insureType.date }}</p>
+            <h2>{{ insuranceType.insurence.insucompany.name }}</h2>
+            <p>{{ insuranceType.insurence.insucompany.created_at }}</p>
           </ion-label>
           <ion-button color="success" href="/insurance">
             Ver más
@@ -66,13 +66,13 @@
         </ion-item>
       </ion-list>
       <ion-list *ngSwitchCase="'shared-insure'">
-        <ion-item class="ion-margin-vertical" *ngFor="let insureType of sharedInsureTypes" lines="none">
+        <ion-item class="ion-margin-vertical" *ngFor="let insuranceType of sharedInsuranceTypes" lines="none">
           <ion-avatar>
-            <img src="{{ insureType.img }}" />
+            <img src="{{ insuranceType.img }}" />
           </ion-avatar>
           <ion-label class="ion-padding-start">
-            <h2>{{ insureType.title }}</h2>
-            <p>{{ insureType.date }}</p>
+            <h2>{{ insuranceType.title }}</h2>
+            <p>{{ insuranceType.date }}</p>
           </ion-label>
           <ion-button color="success" href="/insurance">
             Ver más
