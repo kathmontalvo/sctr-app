@@ -25,7 +25,6 @@ export class AuthService {
       .post(url, { grant_type, client_id, client_secret, username, password })
       .pipe(
         map(data => {
-          console.log(data);
           return data;
         })
       );
@@ -35,7 +34,6 @@ export class AuthService {
     return this.http
       .post(url, { email, password }, { headers: this.headers })
       .pipe(data => {
-        console.log(data);
         return data;
       });
   }

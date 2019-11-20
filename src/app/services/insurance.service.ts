@@ -20,4 +20,15 @@ export class InsuranceService {
     const url = 'http://adm.sctr-insured.com.pe/api/user/home';
     return (this.data = this.http.get(url, { headers: this.headers }));
   }
+  
+  getUserInsurance(insured_id: number){
+    const url = 'http://adm.sctr-insured.com.pe/api/user/insurence';
+    return this.http
+      .post(url, { insured_id }, { headers: this.headers })
+      .pipe(
+        map(data => {
+          return data;
+        })
+      );
+  }
 }

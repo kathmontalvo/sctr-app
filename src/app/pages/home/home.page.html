@@ -60,7 +60,7 @@
             <h2>{{ insuranceType.insurence.insucompany.name }}</h2>
             <p>{{ insuranceType.insurence.insucompany.created_at }}</p>
           </ion-label>
-          <ion-button color="success" href="/insurance">
+          <ion-button color="success" [routerLink]="['/insurance', insuranceType.insurence_id]">
             Ver más
           </ion-button>
         </ion-item>
@@ -86,10 +86,10 @@
     <img src="../../../assets/imgs/logo_insured.png" alt="Logo Insured" />
   </div>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="arrow-dropleft"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 
 </ion-content>

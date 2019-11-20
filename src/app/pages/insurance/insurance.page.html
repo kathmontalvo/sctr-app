@@ -1,11 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button
-        [icon]="buttonIcon"
-        defaultHref="/home"
-        text=""
-      ></ion-back-button>
+      <ion-back-button [icon]="buttonIcon" defaultHref="/home" text=""></ion-back-button>
     </ion-buttons>
 
     <ion-title color="white" class="ion-text-center">
@@ -14,19 +10,14 @@
 
     <ion-buttons slot="end">
       <ion-avatar>
-        <img src="{{ userInfo.img }}" alt="Foto de perfil" />
+          <img src="{{ user.image }}" alt="User avatar" [routerLink]="['/profile']" />
       </ion-avatar>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-segment
-    color="success"
-    value="details"
-    class="ion-padding"
-    [(ngModel)]="segment"
-  >
+<ion-content *ngIf="insuranceInfo">
+  <ion-segment color="success" value="details" class="ion-padding" [(ngModel)]="segment">
     <ion-segment-button value="details">
       <ion-label>DETALLE</ion-label>
     </ion-segment-button>
@@ -41,7 +32,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <div class="ion-padding-horizontal" [ngSwitch]="segment">
+  <div   class="ion-padding-horizontal" [ngSwitch]="segment">
     <div *ngSwitchCase="'details'">
       <div style="text-align:center">
         <!-- <input
@@ -50,91 +41,87 @@
           [(ngModel)]="qrcodename"
         /><br />
         <button (click)="generateQRCode()">Generate QR Code</button> -->
-        <ngx-qrcode
-          *ngIf="display"
-          id="qrCodeImage"
-          [qrc-element-type]="elementType"
-          [qrc-value]="value"
-        >
+        <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value">
         </ngx-qrcode>
-        <!-- <br />
-        <a [href]="href" *ngIf="display" (click)="downloadImage()" download
-          >Download Image</a
-        > -->
       </div>
 
-      <ion-list>
-        <ion-list-header class="ion-no-padding" color="light">
-          Información personal
-        </ion-list-header>
-
+      <ion-list class="ion-no-padding">
+        <ion-title class="ion-text-center ion-margin-vertical">
+          <h2 class="ion-no-margin">
+            QR PLANTA RANSA
+          </h2>
+          <h4 class="ion-no-margin">
+              {{insuranceInfo.code}}
+          </h4>
+        </ion-title>
         <ion-item>
           <ion-label>
             <h3>Asegurador</h3>
-            <p>Pacífico</p>
+            <p>{{insuranceInfo.insucompany.name}}</p>
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
-            <h3>Asegurador</h3>
-            <p>Pacífico</p>
+            <h3>Contrato en salud</h3>
+            <p>{{insuranceInfo.health}}</p>
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
-            <h3>Asegurador</h3>
-            <p>Pacífico</p>
+            <h3>Póliza en pensión</h3>
+            <p>{{insuranceInfo.policy}}</p>
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
-            <h3>Asegurador</h3>
-            <p>Pacífico</p>
+            <h3>Factura</h3>
+            <p>{{insuranceInfo.invonce}}</p>
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
-            <h3>Asegurador</h3>
-            <p>Pacífico</p>
+            <h3>Liquidación</h3>
+            <p>{{insuranceInfo.settling}}</p>
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
-            <h3>Asegurador</h3>
-            <p>Pacífico</p>
+            <h3>Periodo de cobertura</h3>
+            <p>De {{insuranceInfo.from}} al {{insuranceInfo.to}}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Broker</h3>
+            <p>Nombre Apellido</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>Cantidad de asegurados</h3>
+            <p>{{insuranceInfo.insu_users.length}}</p>
           </ion-label>
         </ion-item>
       </ion-list>
+
     </div>
-    <iframe
-      src="../../assets/prueba.pdf"
-      type="application/pdf"
-      width="100%"
-      height="600px"
-      *ngSwitchCase="'pdf'"
-    >
+    <iframe [src]="protectedUrl" type="application/pdf" width="100%" height="600px" *ngSwitchCase="'pdf'">
     </iframe>
+
     <ion-list *ngSwitchCase="'insuranced'">
-      <ion-item
-        *ngFor="let user of users"
-        class="ion-margin-vertical"
-        lines="none"
-      >
+      <ion-item *ngFor="let user of users" class="ion-margin-vertical" lines="none">
         <ion-avatar>
-          <img src="{{ user.img }}" alt="user image" />
+          <img src="{{ user.user.image }}" alt="user image" />
         </ion-avatar>
         <ion-label class="ion-padding-start">
-          <h2>{{ user.name }}</h2>
-          <p>Del {{ user.dateInit }} al {{ user.dateEnd }}</p>
+          <h2>{{ user.user.name }} {{user.user.lastname}}</h2>
+          <p>Del {{ insuranceInfo.from }} al {{ insuranceInfo.to }}</p>
         </ion-label>
       </ion-item>
     </ion-list>
+
     <ion-list *ngSwitchCase="'register'">
-      <ion-item
-        *ngFor="let company of companies"
-        class="ion-margin-vertical"
-        lines="none"
-      >
+      <ion-item *ngFor="let company of companies" class="ion-margin-vertical" lines="none">
         <ion-avatar>
           <img src="{{ company.img }}" alt="user image" />
         </ion-avatar>

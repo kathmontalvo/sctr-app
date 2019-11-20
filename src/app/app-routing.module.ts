@@ -18,7 +18,7 @@ const routes: Routes = [
     loadChildren: "./pages/register/register.module#RegisterPageModule"
   },
   {
-    path: "insurance",
+    path: "insurance/:id",
     loadChildren: "./pages/insurance/insurance.module#InsurancePageModule"
   }
 ];

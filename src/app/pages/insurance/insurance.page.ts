@@ -1,6 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { PopoverController } from "@ionic/angular";
 import { PopoverComponent } from "../../components/popover/popover.component";
+import { ActivatedRoute } from '@angular/router';
+import { InsuranceService } from '../../services/insurance.service';
+import { AuthService } from '../../services/auth.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: "app-insurance",
@@ -13,10 +17,33 @@ export class InsurancePage implements OnInit {
   sctrType: object;
   users: object[];
   companies: object[];
+  insuranceId: number;
+  insuranceInfo: object;
+  qrcodename: string = "asap";
+  title = "generate-qrcode";
+  elementType: "url" | "canvas" | "img" = "url";
+  value: string;
+  display = true;
+  pdfFile: string;
+  fileUrl;
+  protectedUrl: SafeUrl;
+  user;
 
-  constructor(public popOverCtrl: PopoverController) {}
+  constructor(public popOverCtrl: PopoverController, private route: ActivatedRoute, private insuranceService: InsuranceService, private sanitizer: DomSanitizer, private authService: AuthService) {
+    setTimeout(() => {
+      
+      this.protectedUrl = sanitizer.bypassSecurityTrustResourceUrl(this.pdfFile);
+      console.log(this.protectedUrl)
+    }, 1000);
+   }
 
   ngOnInit() {
+    let id = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.insuranceId = id;
+    console.log(this.insuranceId, typeof id);
+    this.getInsuranceData()
+    this.user = this.authService.getObject('user').data;
+
     this.segment = "details";
     this.userInfo = {
       name: "Juan Perez",
@@ -26,36 +53,6 @@ export class InsurancePage implements OnInit {
     this.sctrType = {
       name: "SCTR Tipo 1"
     };
-    this.users = [
-      {
-        name: "Ana Ramos",
-        img:
-          "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100&ssl=1",
-        dateInit: "2/04/19",
-        dateEnd: "30/04/19"
-      },
-      {
-        name: "Juan Lopez",
-        img:
-          "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100&ssl=1",
-        dateInit: "2/04/19",
-        dateEnd: "30/04/19"
-      },
-      {
-        name: "Italo Ramirez",
-        img:
-          "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100&ssl=1",
-        dateInit: "2/04/19",
-        dateEnd: "30/04/19"
-      },
-      {
-        name: "Jair Meneses",
-        img:
-          "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100&ssl=1",
-        dateInit: "2/04/19",
-        dateEnd: "30/04/19"
-      }
-    ];
     this.companies = [
       {
         name: "Backus",
@@ -113,6 +110,9 @@ export class InsurancePage implements OnInit {
       }
     ];
     this.generateQRCode();
+    const file = new Blob([this.pdfFile], { type: 'application/pdf' });
+    this.fileUrl = URL.createObjectURL(file);
+    this.protectedUrl = this.sanitizer.bypassSecurityTrustUrl(this.fileUrl);
   }
 
   async openRegister(ev: any) {
@@ -124,23 +124,28 @@ export class InsurancePage implements OnInit {
     });
     return await popover.present();
   }
-  qrcodename: string = "asap";
-  title = "generate-qrcode";
-  elementType: "url" | "canvas" | "img" = "url";
-  value: string;
-  display = true;
-  href: string;
+
+  getInsuranceData() {
+    this.insuranceService.getUserInsurance(this.insuranceId).subscribe(
+      response => {
+        console.log(response)
+        this.insuranceInfo = response["data"];
+        this.qrcodename = this.insuranceInfo["code"];
+        this.pdfFile = this.insuranceInfo["document"];
+        this.users = this.insuranceInfo["insu_users"]
+      },
+      error => {
+        console.log(error, 'ghjkasdjasd');
+        alert('Error al obtener datos del documento.');
+      }
+    );
+  }
+
+
+
   generateQRCode() {
-    // if (this.qrcodename == "") {
-    //   this.display = false;
-    //   alert("Please enter the name");
-    //   return;
-    // } else {
-    this.value = this.qrcodename;
+    this.value = this.qrcodename
     this.display = true;
-    // }
   }
-  downloadImage() {
-    this.href = document.getElementsByTagName("img")[1].src;
-  }
+
 }
