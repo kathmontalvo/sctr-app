@@ -26,28 +26,7 @@ export class HomePage {
 
     this.user = this.authService.getObject('user').data;
     this.getInsuranceData()
-    // this.insuranceTypes = [
-    //   {
-    //     title: 'SCTR Tipo 1',
-    //     date: '13 de Julio, 2019',
-    //     img: 'http://www.brandemia.org/wp-content/uploads/2011/10/pacifico_principal1.jpg'
-    //   },
-    //   {
-    //     title: 'SCTR Tipo 2',
-    //     date: '15 de Junio, 2019',
-    //     img: 'https://scontent.flim16-2.fna.fbcdn.net/v/t1.0-9/40685546_2065496340129700_6359411715586654208_n.png?_nc_cat=1&_nc_oc=AQlU35x3IxyILe7SuH4UVqxxx9_p6C_8t3TjYfsG3h7G4QFqeqlr8a3yekvdd4Serm4&_nc_ht=scontent.flim16-2.fna&oh=4b3853be3545648a44598fcd27daac06&oe=5E2CF2E1'
-    //   },
-    //   {
-    //     title: 'SCTR Tipo 3',
-    //     date: '13 de Agosto, 2019',
-    //     img: 'https://www.stex.edu.pe/wp-content/uploads/2019/04/seguro_mapfre.png'
-    //   },
-    //   {
-    //     title: 'SCTR Tipo 4',
-    //     date: '15 de Mayo, 2019',
-    //     img: 'https://scontent.flim16-2.fna.fbcdn.net/v/t1.0-9/40685546_2065496340129700_6359411715586654208_n.png?_nc_cat=1&_nc_oc=AQlU35x3IxyILe7SuH4UVqxxx9_p6C_8t3TjYfsG3h7G4QFqeqlr8a3yekvdd4Serm4&_nc_ht=scontent.flim16-2.fna&oh=4b3853be3545648a44598fcd27daac06&oe=5E2CF2E1'
-    //   }
-    // ];
+
     this.sharedInsuranceTypes = [
       {
         title: 'SCTR Tipo 5',
@@ -87,13 +66,13 @@ export class HomePage {
       this.barChart = new Chart(this.barCanvas.nativeElement, {
         type: 'line',
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: ['', '', '', '', '', ''],
           datasets: [
             {
               label: '# of Votes',
               data: [12, 19, 3, 5, 2, 3],
               backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-              borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+              borderColor: ['rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)'],
               borderWidth: 1
             }
           ]
