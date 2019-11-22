@@ -44,9 +44,16 @@ ion-content {
   .bottom-content {
     bottom: -1.5em;
     position: relative;
-    ion-text {
+    div {
       img {
         filter: invert(100%)
+      }
+      .insured{
+        font-size: 12px;
+        margin-top: -16px;
+        margin-left: 6px;
+        letter-spacing: 5px;
+        color: white;
       }
     }
   }

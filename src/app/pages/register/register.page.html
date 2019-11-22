@@ -2,8 +2,7 @@
   <section class="ion-padding main-content">
     <div class="ion-padding ion-text-center">
       <div class="app-name">
-        <ion-icon name="cube"></ion-icon>
-        <span> SCTR</span>
+        <img src="../../../assets/imgs/logo_sctr.png" alt="Logo SCTR" />
       </div>
       <ion-text color="dark">
         <h5>Regístrate aquí</h5>
@@ -11,11 +10,7 @@
     </div>
     <form [formGroup]="registerForm" (ngSubmit)="loginUser(registerForm.value)">
       <ion-item class="ion-margin-bottom" color="medium">
-        <ion-input
-          type="email"
-          formControlName="email"
-          placeholder="Ingresa tu mail"
-        ></ion-input>
+        <ion-input type="email" formControlName="email" placeholder="Ingresa tu mail"></ion-input>
       </ion-item>
       <div class="validation-error">
         <ng-container *ngFor="let validation of validation_messages.email">
@@ -31,11 +26,7 @@
         </ng-container>
       </div>
       <ion-item class="ion-margin-bottom" color="medium">
-        <ion-input
-          type="password"
-          formControlName="password"
-          placeholder="Ingresa tu contraseña"
-        ></ion-input>
+        <ion-input type="password" formControlName="password" placeholder="Ingresa tu contraseña"></ion-input>
       </ion-item>
       <div class="validation-error">
         <ng-container *ngFor="let validation of validation_messages.password">
@@ -51,19 +42,9 @@
         </ng-container>
       </div>
       <ion-item class="ion-margin-bottom" color="medium">
-        <ion-input
-          type="password"
-          formControlName="confirmPassword"
-          placeholder="Confirma tu contraseña"
-        ></ion-input>
+        <ion-input type="password" formControlName="confirmPassword" placeholder="Confirma tu contraseña"></ion-input>
       </ion-item>
-      <ion-button
-        expand="block"
-        color="success"
-        [disabled]="!registerForm.valid"
-        type="submit"
-        >REGISTRAR</ion-button
-      >
+      <ion-button expand="block" color="success" [disabled]="!registerForm.valid" type="submit">REGISTRAR</ion-button>
       <div class="ion-text-center ion-padding">
         <ion-text color="medium-dark">
           ¿Ya tienes una cuenta? Ingresa
@@ -74,11 +55,11 @@
   </section>
   <section class="ion-padding ion-text-center bottom-content">
     <ion-text color="light">
-      <p>Tu seguro siempre contigo</p>
+      <p>Tu Seguro Siempre Contigo</p>
     </ion-text>
-    <ion-text color="light">
-      <p>LOGO INSURED</p>
-    </ion-text>
-    <!-- <ion-img [src]="itemsrc" alt="Logo"></ion-img> -->
+    <div color="light">
+      <img src="../../../assets/imgs/logo_insured.png" alt="Logo Insured" />
+      <p class="ion-no-margin insured">INSURED</p>
+    </div>
   </section>
 </ion-content>
