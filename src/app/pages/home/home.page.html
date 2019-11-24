@@ -58,7 +58,7 @@
           </ion-avatar>
           <ion-label class="ion-padding-start">
             <h2>{{ insuranceType.insurence.insucompany.name }}</h2>
-            <p>{{ insuranceType.insurence.insucompany.created_at }}</p>
+            <p>{{ insuranceType.insurence.from_format }}</p>
           </ion-label>
           <ion-button color="success" [routerLink]="['/insurance', insuranceType.insurence_id]">
             Ver más

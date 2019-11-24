@@ -35,20 +35,11 @@
   <div class="ion-padding-horizontal" [ngSwitch]="segment">
     <div *ngSwitchCase="'details'">
       <div style="text-align:center">
-        <!-- <input
-          type="text"
-          placeholder="Enter name to generate QR Code"
-          [(ngModel)]="qrcodename"
-        /><br />
-        <button (click)="generateQRCode()">Generate QR Code</button> -->
         <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value"> </ngx-qrcode>
       </div>
 
       <ion-list class="ion-no-padding">
         <ion-title class="ion-text-center ion-margin-vertical">
-          <h2 class="ion-no-margin">
-            QR PLANTA RANSA
-          </h2>
           <h4 class="ion-no-margin">
             {{insuranceInfo.code}}
           </h4>
@@ -86,13 +77,13 @@
         <ion-item>
           <ion-label>
             <h3>Periodo de cobertura</h3>
-            <p>De {{insuranceInfo.from}} al {{insuranceInfo.to}}</p>
+            <p>De {{insuranceInfo.from_format}} al {{insuranceInfo.to_format}}</p>
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
             <h3>Broker</h3>
-            <p>Nombre Apellido</p>
+            <p>{{insuranceInfo.broker}}</p>
           </ion-label>
         </ion-item>
         <ion-item>
@@ -112,7 +103,7 @@
         </ion-avatar>
         <ion-label class="ion-padding-start">
           <h2>{{ user.user.name }} {{user.user.lastname}}</h2>
-          <p>Del {{ insuranceInfo.from }} al {{ insuranceInfo.to }}</p>
+          <p>Del {{ insuranceInfo.from_format }} al {{ insuranceInfo.to_format }}</p>
         </ion-label>
       </ion-item>
     </ion-list>

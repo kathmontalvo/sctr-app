@@ -13,7 +13,9 @@ export class InsuranceService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   headers: HttpHeaders = new HttpHeaders({
-    Authorization: 'Bearer ' + this.authService.getItem('access_token')
+    Authorization: 'Bearer ' + this.authService.getItem('access_token'),
+    "Accept": "application/json, text/plain",
+
   });
 
   getInsurances() {

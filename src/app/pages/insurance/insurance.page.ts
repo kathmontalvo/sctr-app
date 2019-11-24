@@ -31,10 +31,9 @@ export class InsurancePage implements OnInit {
 
   constructor(public popOverCtrl: PopoverController, private route: ActivatedRoute, private insuranceService: InsuranceService, private sanitizer: DomSanitizer, private authService: AuthService) {
     setTimeout(() => {
-      
       this.protectedUrl = sanitizer.bypassSecurityTrustResourceUrl(this.pdfFile);
       console.log(this.protectedUrl)
-    }, 1000);
+    }, 2000);
    }
 
   ngOnInit() {

@@ -10,7 +10,8 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   headers: HttpHeaders = new HttpHeaders({
-    "Content-Type": "application/x-www-form-urlencoded"
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Accept": "application/json, text/plain"
   });
 
   login(
