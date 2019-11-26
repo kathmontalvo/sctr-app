@@ -11,10 +11,6 @@ export class ProfilePage implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.userInfo = this.authService.getObject('user').data;
-    // this.userInfo = {
-    //   name: 'Juan Perez',
-    //   img: 'https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100&ssl=1'
-    // };
+    this.userInfo = this.authService.getObject('user');
   }
 }

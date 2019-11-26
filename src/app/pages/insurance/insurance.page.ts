@@ -1,27 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { PopoverController } from "@ionic/angular";
-import { PopoverComponent } from "../../components/popover/popover.component";
+import { Component, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { PopoverComponent } from '../../components/popover/popover.component';
 import { ActivatedRoute } from '@angular/router';
 import { InsuranceService } from '../../services/insurance.service';
 import { AuthService } from '../../services/auth.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: "app-insurance",
-  templateUrl: "./insurance.page.html",
-  styleUrls: ["./insurance.page.scss"]
+  selector: 'app-insurance',
+  templateUrl: './insurance.page.html',
+  styleUrls: ['./insurance.page.scss']
 })
 export class InsurancePage implements OnInit {
   segment: string;
-  userInfo: object;
   sctrType: object;
   users: object[];
   companies: object[];
   insuranceId: number;
   insuranceInfo: object;
-  qrcodename: string = "asap";
-  title = "generate-qrcode";
-  elementType: "url" | "canvas" | "img" = "url";
+  qrcodename: string = 'asap';
+  title = 'generate-qrcode';
+  elementType: 'url' | 'canvas' | 'img' = 'url';
   value: string;
   display = true;
   pdfFile: string;
@@ -32,78 +31,71 @@ export class InsurancePage implements OnInit {
   constructor(public popOverCtrl: PopoverController, private route: ActivatedRoute, private insuranceService: InsuranceService, private sanitizer: DomSanitizer, private authService: AuthService) {
     setTimeout(() => {
       this.protectedUrl = sanitizer.bypassSecurityTrustResourceUrl(this.pdfFile);
-      console.log(this.protectedUrl)
+      console.log(this.protectedUrl);
     }, 2000);
-   }
+  }
 
   ngOnInit() {
     let id = parseInt(this.route.snapshot.paramMap.get('id'));
     this.insuranceId = id;
     console.log(this.insuranceId, typeof id);
-    this.getInsuranceData()
-    this.user = this.authService.getObject('user').data;
+    this.getInsuranceData();
+    this.user = this.authService.getObject('user');
 
-    this.segment = "details";
-    this.userInfo = {
-      name: "Juan Perez",
-      img:
-        "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100&ssl=1"
-    };
+    this.segment = 'details';
+
     this.sctrType = {
-      name: "SCTR Tipo 1"
+      name: 'SCTR Tipo 1'
     };
     this.companies = [
       {
-        name: "Backus",
-        place: "Ate",
-        img:
-          "https://s3.amazonaws.com/www.laborum.pe/lb_companies/r/xpo/photos/83901/tom-parker-oneredeye-0875.jpg",
+        name: 'Backus',
+        place: 'Ate',
+        img: 'https://s3.amazonaws.com/www.laborum.pe/lb_companies/r/xpo/photos/83901/tom-parker-oneredeye-0875.jpg',
         register: [
           {
-            date: "11/04/19",
-            entry: "7:51",
-            exit: "8:51"
+            date: '11/04/19',
+            entry: '7:51',
+            exit: '8:51'
           },
           {
-            date: "11/05/19",
-            entry: "7:51",
-            exit: "8:51"
+            date: '11/05/19',
+            entry: '7:51',
+            exit: '8:51'
           }
         ]
       },
       {
-        name: "Gloria",
-        place: "Ate",
-        img:
-          "https://s3.amazonaws.com/www.laborum.pe/lb_companies/r/xpo/photos/83901/tom-parker-oneredeye-0875.jpg",
+        name: 'Gloria',
+        place: 'Ate',
+        img: 'https://s3.amazonaws.com/www.laborum.pe/lb_companies/r/xpo/photos/83901/tom-parker-oneredeye-0875.jpg',
         register: [
           {
-            date: "11/04/19",
-            entry: "7:51",
-            exit: "8:51"
+            date: '11/04/19',
+            entry: '7:51',
+            exit: '8:51'
           },
           {
-            date: "11/05/19",
-            entry: "7:51",
-            exit: "8:51"
+            date: '11/05/19',
+            entry: '7:51',
+            exit: '8:51'
           }
         ]
       },
       {
-        name: "Ramsa",
-        place: "Callao",
-        img:
-          "https://s3.amazonaws.com/www.laborum.pe/lb_companies/r/xpo/photos/83901/tom-parker-oneredeye-0875.jpg",
+        name: 'Ramsa',
+        place: 'Callao',
+        img: 'https://s3.amazonaws.com/www.laborum.pe/lb_companies/r/xpo/photos/83901/tom-parker-oneredeye-0875.jpg',
         register: [
           {
-            date: "11/04/19",
-            entry: "7:51",
-            exit: "8:51"
+            date: '11/04/19',
+            entry: '7:51',
+            exit: '8:51'
           },
           {
-            date: "11/05/19",
-            entry: "7:51",
-            exit: "8:51"
+            date: '11/05/19',
+            entry: '7:51',
+            exit: '8:51'
           }
         ]
       }
@@ -127,11 +119,11 @@ export class InsurancePage implements OnInit {
   getInsuranceData() {
     this.insuranceService.getUserInsurance(this.insuranceId).subscribe(
       response => {
-        console.log(response)
-        this.insuranceInfo = response["data"];
-        this.qrcodename = this.insuranceInfo["code"];
-        this.pdfFile = this.insuranceInfo["document"];
-        this.users = this.insuranceInfo["insu_users"]
+        console.log(response);
+        this.insuranceInfo = response['data'];
+        this.qrcodename = this.insuranceInfo['code'];
+        this.pdfFile = this.insuranceInfo['document'];
+        this.users = this.insuranceInfo['insu_users'];
       },
       error => {
         console.log(error, 'ghjkasdjasd');
@@ -140,11 +132,8 @@ export class InsurancePage implements OnInit {
     );
   }
 
-
-
   generateQRCode() {
-    this.value = this.qrcodename
+    this.value = this.qrcodename;
     this.display = true;
   }
-
 }

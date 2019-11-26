@@ -12,8 +12,14 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   validation_messages = {
-    email: [{ type: 'required', message: 'El email es requerido' }, { type: 'pattern', message: 'Email no es válido' }],
-    password: [{ type: 'required', message: 'La contraseña es requerida' }, { type: 'minLength', message: 'Mínimo 6 caracteres ' }]
+    email: [
+      { type: 'required', message: 'El email es requerido' },
+      { type: 'pattern', message: 'Email no es válido' }
+    ],
+    password: [
+      { type: 'required', message: 'La contraseña es requerida' },
+      { type: 'minLength', message: 'Mínimo 6 caracteres ' }
+    ]
   };
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private userService: UserService) {
@@ -24,21 +30,17 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {}
+
   loginUser(credentials) {
     const grant_type = 'password';
     const client_id = '2';
     const client_secret = 'XrDnYGDzV8bLe0ZHWv71uKJP4vgYsCuvBQZ5fnpV';
 
     this.authService.login(grant_type, client_id, client_secret, credentials.email, credentials.password).subscribe(
-      response => {
+      async response => {
         console.log(response);
-
-        this.authService.setItem('access_token', response.access_token);
-        if (this.authService.getItem('access_token')) {
-          this.getUser();
-        } else {
-          alert('Error en las credenciales. Volver a intentar.');
-        }
+        await this.authService.setItem('access_token', response['access_token']);
+        this.router.navigate(['/home']);
       },
       error => {
         console.log(error, 'ghjkasdjasd');
@@ -46,11 +48,19 @@ export class LoginPage implements OnInit {
       }
     );
   }
-  getUser() {
-    this.userService.getUser().subscribe(user => {
-      this.authService.setObject('user', user);
-      console.log(this.authService.getObject('user'));
-      this.router.navigate(['/home']);
-    });
-  }
+  // getUser() {
+  //   if (this.authService.getItem('access_token')) {
+  //     this.userService.getUser().subscribe(
+  //       user => {
+  //         this.authService.setObject('user', user);
+  //         console.log(this.authService.getObject('user'));
+  //         this.router.navigate(['/home']);
+  //       },
+  //       error => {
+  //         console.log(error, 'ghjkasdjasd');
+  //         alert('Error en las credenciales. Volver a intentar');
+  //       }
+  //     );
+  //   }
+  // }
 }

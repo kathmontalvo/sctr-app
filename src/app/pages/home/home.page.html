@@ -1,5 +1,5 @@
 <ion-content class="ion-padding-vertical">
-  <ion-grid class="ion-padding">
+  <ion-grid class="ion-padding" *ngIf="user">
     <ion-row>
       <ion-col size="9">
         <ion-label>
@@ -68,13 +68,13 @@
       <ion-list *ngSwitchCase="'shared-insure'">
         <ion-item class="ion-margin-vertical" *ngFor="let insuranceType of sharedInsuranceTypes" lines="none">
           <ion-avatar>
-            <img src="{{ insuranceType.img }}" />
+            <img src="{{ insuranceType.insurence.insucompany.image}}" />
           </ion-avatar>
           <ion-label class="ion-padding-start">
-            <h2>{{ insuranceType.title }}</h2>
-            <p>{{ insuranceType.date }}</p>
+            <h2>{{ insuranceType.insurence.insucompany.name }}</h2>
+            <p>{{ insuranceType.insurence.from_format }}</p>
           </ion-label>
-          <ion-button color="success" href="/insurance">
+          <ion-button color="success" [routerLink]="['/insurance', insuranceType.insurence_id]">
             Ver más
           </ion-button>
         </ion-item>
@@ -91,5 +91,4 @@
       <ion-icon name="arrow-dropleft"></ion-icon>
     </ion-fab-button>
   </ion-fab> -->
-
 </ion-content>
