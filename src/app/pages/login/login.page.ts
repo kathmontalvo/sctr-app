@@ -44,7 +44,8 @@ export class LoginPage implements OnInit {
       },
       error => {
         console.log(error, 'ghjkasdjasd');
-        alert('Ingresar correo y/o contraseña válidos');
+        const message = error.message + ' // ' + error.statusText;
+        alert(message);
       }
     );
   }
