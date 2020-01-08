@@ -25,4 +25,12 @@ export class UserService {
       })
     );
   }
+  uploadImage(){
+    const url = 'http://adm.sctr-insured.com.pe/api/user/update/image';
+    return this.http.post(url, {}, { headers: this.headers }).pipe(
+      map(data => {
+        console.log(data);
+        return data;
+      })
+    );  }
 }
