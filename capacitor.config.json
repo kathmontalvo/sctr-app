@@ -3,5 +3,6 @@
   "appName": "sctr-app",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www"
+  "webDir": "www",
+  "linuxAndroidStudioPath": "/snap/bin/android-studio"
 }

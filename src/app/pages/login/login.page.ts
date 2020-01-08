@@ -40,6 +40,7 @@ export class LoginPage implements OnInit {
       async response => {
         console.log(response);
         await this.authService.setItem('access_token', response['access_token']);
+        this.getUser()
         this.router.navigate(['/home']);
       },
       error => {
@@ -49,19 +50,19 @@ export class LoginPage implements OnInit {
       }
     );
   }
-  // getUser() {
-  //   if (this.authService.getItem('access_token')) {
-  //     this.userService.getUser().subscribe(
-  //       user => {
-  //         this.authService.setObject('user', user);
-  //         console.log(this.authService.getObject('user'));
-  //         this.router.navigate(['/home']);
-  //       },
-  //       error => {
-  //         console.log(error, 'ghjkasdjasd');
-  //         alert('Error en las credenciales. Volver a intentar');
-  //       }
-  //     );
-  //   }
-  // }
+  getUser() {
+    if (this.authService.getItem('access_token')) {
+      this.userService.getUser().subscribe(
+        user => {
+          this.authService.setObject('user', user);
+          console.log(this.authService.getObject('user'));
+          this.router.navigate(['/home']);
+        },
+        error => {
+          console.log(error, 'ghjkasdjasd');
+          alert('Error en las credenciales. Volver a intentar');
+        }
+      );
+    }
+  }
 }
