@@ -33,4 +33,14 @@ export class InsuranceService {
         })
       );
   }
+  getInsuranceRegister(insured_id: number){
+    const url = 'http://adm.sctr-insured.com.pe/api/user/history';
+    return this.http
+      .post(url, { insured_id }, { headers: this.headers })
+      .pipe(
+        map(data => {
+          return data;
+        })
+      );
+  }
 }

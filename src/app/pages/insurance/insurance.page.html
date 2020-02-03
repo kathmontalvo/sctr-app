@@ -30,6 +30,7 @@
     value="details"
     class="ion-padding"
     [(ngModel)]="segment"
+    mode="ios"
   >
     <ion-segment-button value="details">
       <ion-label>DETALLE</ion-label>
@@ -51,17 +52,19 @@
         <ngx-qrcode
           *ngIf="display"
           id="qrCodeImage"
-          [qrc-element-type]="elementType"
-          [qrc-value]="value"
+          [qrc-value]="insuranceInfo.code"
+          [qrc-element-type]="'img'"
+          qrc-class="qr-image"
+          qrc-version="5"
         >
         </ngx-qrcode>
       </div>
 
-      <ion-title class="ion-text-center ion-margin-vertical">
-        <h4 class="ion-no-margin">
-          {{insuranceInfo.code}}
-        </h4>
-      </ion-title>
+      <ion-text class="ion-text-center ion-margin-vertical">
+        <h5>
+          Código: {{insuranceInfo.code}}
+        </h5>
+      </ion-text>
       <ion-list class="ion-no-padding">
         <ion-item>
           <ion-label>
@@ -144,18 +147,18 @@
 
     <ion-list *ngSwitchCase="'register'">
       <ion-item
-        *ngFor="let company of companies"
+        *ngFor="let company of companies | keyvalue "
         class="ion-margin-vertical"
         lines="none"
       >
         <ion-avatar>
-          <img src="{{ company.img }}" alt="user image" />
+          <img src="{{ company.value.image_url}}" alt="user image" />
         </ion-avatar>
         <ion-label class="ion-padding-start">
-          <h2>{{ company.name }}</h2>
-          <p>Planta {{ company.place }}</p>
+          <h2>{{ company.value.name}}</h2>
+          <p>Planta {{ company.value.campus }}</p>
         </ion-label>
-        <ion-button color="success" (click)="openRegister( )">
+        <ion-button color="success" (click)="openRegister($ev, company.key)">
           Ver registro
         </ion-button>
       </ion-item>

@@ -9,7 +9,11 @@
       </ion-col>
       <ion-col size="3" class="profile-img">
         <ion-avatar class="ion-no-margin">
-          <img src="{{ user.image_url }}" alt="User avatar" [routerLink]="['/profile']" />
+          <img
+            src="{{ user.image_url }}"
+            alt="User avatar"
+            [routerLink]="['/profile']"
+          />
         </ion-avatar>
         <ion-label>
           <p [routerLink]="['/profile']">Ver perfil</p>
@@ -25,7 +29,7 @@
         <ion-row>
           <ion-col size="4" class="col-1-chart">
             <h2 class="ion-no-margin">
-              120
+              52
             </h2>
             <p class="ion-no-margin">Días en planta</p>
           </ion-col>
@@ -38,7 +42,13 @@
   </div>
 
   <div class="ion-padding">
-    <ion-segment [(ngModel)]="segment" color="success" mode="md">
+    <ion-searchbar 
+      placeholder="Buscar SCTR"  
+      mode="ios"
+      (ionInput)="handleInput($event)"
+      ></ion-searchbar>
+
+    <!-- <ion-segment [(ngModel)]="segment" color="success" mode="md">
       <ion-segment-button value="insure" checked>
         <ion-label>
           MIS SEGUROS
@@ -49,36 +59,46 @@
           SEGUROS COMPARTIDOS
         </ion-label>
       </ion-segment-button>
-    </ion-segment>
-    <div [ngSwitch]="segment">
-      <ion-list *ngSwitchCase="'insure'">
-        <ion-item class="ion-margin-vertical" *ngFor="let insuranceType of insuranceTypes" lines="none">
+    </ion-segment>  -->
+    <!-- <div [ngSwitch]="segment"> -->
+    <div>
+      <!-- <ion-list *ngSwitchCase="'insure'"> -->
+      <ion-list mode="ios">
+        <ion-item
+          class="ion-margin-vertical"
+          *ngFor="let insuranceType of insuranceTypes"
+          lines="none"
+        >
           <ion-avatar>
             <img src="{{ insuranceType.insurence.insucompany.image_url }}" />
           </ion-avatar>
           <ion-label class="ion-padding-start">
-            <h2>{{ insuranceType.insurence.insucompany.name }}</h2>
+            <h2>SCTR {{ insuranceType.insurence.type.name }}</h2>
             <p>{{ insuranceType.insurence.from_format }}</p>
           </ion-label>
-          <ion-button color="success" [routerLink]="['/insurance', insuranceType.insurence_id]">
+          <ion-button
+            color="success"
+            [routerLink]="['/insurance', insuranceType.insurence_id]"
+            mode="ios"
+          >
             Ver más
           </ion-button>
         </ion-item>
       </ion-list>
-      <ion-list *ngSwitchCase="'shared-insure'">
+      <!-- <ion-list *ngSwitchCase="'shared-insure'">
         <ion-item class="ion-margin-vertical" *ngFor="let insuranceType of sharedInsuranceTypes" lines="none">
           <ion-avatar>
             <img src="{{ insuranceType.insurence.insucompany.image_url}}" />
           </ion-avatar>
           <ion-label class="ion-padding-start">
-            <h2>{{ insuranceType.insurence.insucompany.name }}</h2>
+            <h2>SCTR {{ insuranceType.insurence.type.name }}</h2>
             <p>{{ insuranceType.insurence.from_format }}</p>
           </ion-label>
           <ion-button color="success" [routerLink]="['/insurance', insuranceType.insurence_id]">
             Ver más
           </ion-button>
         </ion-item>
-      </ion-list>
+      </ion-list> -->
     </div>
   </div>
 

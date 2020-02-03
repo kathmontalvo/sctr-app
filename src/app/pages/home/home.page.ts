@@ -1,15 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { InsuranceService } from '../../services/insurance.service';
-import { Chart } from 'chart.js';
+import { Component, ViewChild } from "@angular/core";
+import { AuthService } from "../../services/auth.service";
+import { InsuranceService } from "../../services/insurance.service";
+import { Chart } from "chart.js";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  selector: "app-home",
+  templateUrl: "home.page.html",
+  styleUrls: ["home.page.scss"]
 })
 export class HomePage {
-  @ViewChild('barCanvas', { static: false }) barCanvas: any;
+  @ViewChild("barCanvas", { static: false }) barCanvas: any;
 
   segment: string;
   user: object;
@@ -19,10 +19,13 @@ export class HomePage {
 
   private barChart: Chart;
 
-  constructor(private authService: AuthService, private insuranceService: InsuranceService) {}
+  constructor(
+    private authService: AuthService,
+    private insuranceService: InsuranceService
+  ) {}
 
   ngOnInit() {
-    this.segment = 'insure';
+    this.segment = "insure";
     this.getInsuranceData();
   }
 
@@ -35,15 +38,29 @@ export class HomePage {
     console.log(this.barCanvas);
     if (this.barCanvas) {
       this.barChart = new Chart(this.barCanvas.nativeElement, {
-        type: 'line',
+        type: "line",
         data: {
-          labels: ['', '', '', '', '', ''],
+          labels: ["Jul", "Ago", "Oct", "Nov", "Dic", "Ene"],
           datasets: [
             {
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-              borderColor: ['rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)', 'rgba(255,99,132,1)'],
+              label: "# of Votes",
+              data: [12, 19, 3, 5, 2, 11],
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+                "rgba(255, 159, 64, 0.2)"
+              ],
+              borderColor: [
+                "rgba(255,99,132,1)",
+                "rgba(255,99,132,1)",
+                "rgba(255,99,132,1)",
+                "rgba(255,99,132,1)",
+                "rgba(255,99,132,1)",
+                "rgba(255,99,132,1)"
+              ],
               borderWidth: 1
             }
           ]
@@ -67,11 +84,22 @@ export class HomePage {
   }
   getInsuranceData() {
     this.insuranceService.getInsurances().subscribe(res => {
-      this.insuranceTypes = res['data'];
+      this.insuranceTypes = res["data"];
       this.sharedInsuranceTypes = this.insuranceTypes;
-      this.user = this.insuranceTypes[0]['user'];
-      this.authService.setObject('user', this.user);
+      this.user = this.insuranceTypes[0]["user"];
+      this.authService.setObject("user", this.user);
       console.log(this.user);
+    });
+  }
+  handleInput($event) {
+    const query = $event.target.value.toLowerCase();
+    const items = Array.from(document.querySelector("ion-list").children);
+
+    requestAnimationFrame(() => {
+      items.forEach(item => {
+        const shouldShow = item.textContent.toLowerCase().indexOf(query) > -1;
+        item.style.display = shouldShow ? "block" : "none";
+      });
     });
   }
 }

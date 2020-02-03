@@ -1,3 +1,7 @@
+.qr-image > img {
+  width: 200px !important;
+}
+
 ion-header {
   ion-toolbar {
     --background: var(--ion-color-success);
@@ -21,8 +25,12 @@ ion-header {
 ion-content {
   --background: var(--ion-color-light);
   .qr-container {
-    text-align:center img {
-      width: 50%;
+    text-align: center;
+  }
+  ion-text {
+    h5 {
+      margin-top: 5px;
+      margin-bottom: 16px;
     }
   }
   ion-segment-button {
