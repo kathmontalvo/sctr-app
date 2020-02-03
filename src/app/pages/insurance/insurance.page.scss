@@ -20,7 +20,11 @@ ion-header {
 }
 ion-content {
   --background: var(--ion-color-light);
-
+  .qr-container {
+    text-align:center img {
+      width: 50%;
+    }
+  }
   ion-segment-button {
     font-size: 10px;
   }

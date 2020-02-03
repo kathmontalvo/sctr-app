@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
       async response => {
         console.log(response);
         await this.authService.setItem('access_token', response['access_token']);
-        this.getUser()
+        // this.getUser()
         this.router.navigate(['/home']);
       },
       error => {

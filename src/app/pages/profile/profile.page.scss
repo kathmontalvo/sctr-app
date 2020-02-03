@@ -30,6 +30,9 @@ ion-content {
     border: dashed;
     border-color: #e8ecef;
   }
+  input#file {
+    display: none;
+  }
   ion-item {
     padding-left: 0.8em;
     padding-right: 0.8em;

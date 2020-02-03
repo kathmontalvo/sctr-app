@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
+            <!--
+            android:usesCleartextTraffic="true"
+            Agregué esta sección fixing ERR NOT CLEAR TEXT -->
 
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"

@@ -9,7 +9,7 @@
       </ion-col>
       <ion-col size="3" class="profile-img">
         <ion-avatar class="ion-no-margin">
-          <img src="{{ user.image }}" alt="User avatar" [routerLink]="['/profile']" />
+          <img src="{{ user.image_url }}" alt="User avatar" [routerLink]="['/profile']" />
         </ion-avatar>
         <ion-label>
           <p [routerLink]="['/profile']">Ver perfil</p>
@@ -54,7 +54,7 @@
       <ion-list *ngSwitchCase="'insure'">
         <ion-item class="ion-margin-vertical" *ngFor="let insuranceType of insuranceTypes" lines="none">
           <ion-avatar>
-            <img src="{{ insuranceType.insurence.insucompany.image }}" />
+            <img src="{{ insuranceType.insurence.insucompany.image_url }}" />
           </ion-avatar>
           <ion-label class="ion-padding-start">
             <h2>{{ insuranceType.insurence.insucompany.name }}</h2>
@@ -68,7 +68,7 @@
       <ion-list *ngSwitchCase="'shared-insure'">
         <ion-item class="ion-margin-vertical" *ngFor="let insuranceType of sharedInsuranceTypes" lines="none">
           <ion-avatar>
-            <img src="{{ insuranceType.insurence.insucompany.image}}" />
+            <img src="{{ insuranceType.insurence.insucompany.image_url}}" />
           </ion-avatar>
           <ion-label class="ion-padding-start">
             <h2>{{ insuranceType.insurence.insucompany.name }}</h2>
