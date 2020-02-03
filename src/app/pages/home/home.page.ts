@@ -98,7 +98,7 @@ export class HomePage {
     requestAnimationFrame(() => {
       items.forEach(item => {
         const shouldShow = item.textContent.toLowerCase().indexOf(query) > -1;
-        item.style.display = shouldShow ? "block" : "none";
+        item["style"].display = shouldShow ? "block" : "none";
       });
     });
   }

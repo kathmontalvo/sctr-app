@@ -47,14 +47,10 @@ export class InsurancePage implements OnInit {
     let id = parseInt(this.route.snapshot.paramMap.get("id"));
     this.insuranceId = id;
     console.log(this.insuranceId, typeof id);
-    this.getInsuranceData();
+    this.getInsuranceData(this.insuranceId);
     this.user = this.authService.getObject("user");
 
     this.segment = "details";
-
-    this.sctrType = {
-      name: "SCTR Tipo 1"
-    };
     this.generateQRCode();
     const file = new Blob([this.pdfFile], { type: "application/pdf" });
     this.fileUrl = URL.createObjectURL(file);
@@ -62,7 +58,7 @@ export class InsurancePage implements OnInit {
   }
 
   async openRegister(ev, key) {
-    this.authService.setObject("visits", this.companies[key]["visits"])
+    this.authService.setObject("visits", this.companies[key]["visits"]);
     const popover = await this.popOverCtrl.create({
       component: PopoverComponent,
       event: ev,
@@ -72,15 +68,17 @@ export class InsurancePage implements OnInit {
     return await popover.present();
   }
 
-  getInsuranceData() {
-    this.insuranceService.getUserInsurance(this.insuranceId).subscribe(
+  getInsuranceData(insuranceId) {
+    this.insuranceService.getUserInsurance(insuranceId).subscribe(
       response => {
         console.log(response);
+        this.authService.setObject("insurance", response["data"]);
         this.insuranceInfo = response["data"];
         this.qrcodename = this.insuranceInfo["code"];
         this.pdfFile = this.insuranceInfo["document"];
         this.users = this.insuranceInfo["insu_users"];
-        this.getRegister(this.insuranceId)
+        this.sctrType = this.insuranceInfo["type"];
+        this.getRegister(insuranceId);
       },
       error => {
         console.log(error, "ghjkasdjasd");
@@ -95,7 +93,7 @@ export class InsurancePage implements OnInit {
   }
   getRegister(id) {
     this.insuranceService.getInsuranceRegister(id).subscribe(response => {
-      this.companies = response["data"]
+      this.companies = response["data"];
       console.log(this.companies);
     });
   }
