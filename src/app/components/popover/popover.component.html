@@ -15,11 +15,11 @@
       <!-- <ion-button color="success">Registrar entrada</ion-button> -->
     </ion-card-header>
     <ion-card-content>
-      <p>Entrada: <span>{{visits[visits.length-1].from.hour}}</span></p>
-      <p>Salida: <span>{{visits[visits.length-1].to.hour}}</span></p>
+      <p>Entrada: <span>{{ dateStr === today ? today.from.hour : '-' }}</span></p>
+      <p>Salida: <span>{{ dateStr === today ? today.to.hour : '-' }}</span></p>
       <br />
       <div>
-        * Ingresó 30 minutos antes. Autorizado por el Ing. Velasquez.
+         Comentario: {{ dateStr === today ? today.body : '-' }}
       </div>
       <!-- <form class="ion-margin-vertical">
         <textarea
@@ -41,7 +41,7 @@
     <ion-card-content>
       Entrada: <span>{{ visit.from.hour }}</span> Salida:
       <span>{{ visit.to.hour }}</span>
-      <p>* Ingresó con una tardanza de 30 minutos.</p>
+      <p>* {{ visit.body }} </p>
     </ion-card-content>
   </ion-card>
 </ion-content>

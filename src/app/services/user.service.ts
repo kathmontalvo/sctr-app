@@ -23,8 +23,12 @@ export class UserService {
   });
 
   getUser() {
+    const headers = new HttpHeaders({
+      Authorization: "Bearer " + this.authService.getItem("access_token"),
+      Accept: "application/json, text/plain"
+    });
     const url = "http://adm.sctr-insured.com.pe/api/oauth/current/user";
-    return this.http.post(url, {}, { headers: this.headers }).pipe(
+    return this.http.post(url, {}, { headers: headers }).pipe(
       map(data => {
         console.log(data);
         return data;
@@ -33,12 +37,17 @@ export class UserService {
   }
 
   updateUser(file: string) {
+    const formHeaders: HttpHeaders = new HttpHeaders({
+      Authorization: "Bearer " + this.authService.getItem("access_token"),
+      // "Content-Type": "multipart/form-data",
+      Accept: "application/json, text/plain"
+    });
     const url = "http://adm.sctr-insured.com.pe/api/user/update";
 
     const fd = new FormData();
     fd.append("image", file);
 
-    return this.http.post(url, fd, { headers: this.headers }).pipe(
+    return this.http.post(url, fd, { headers: formHeaders }).pipe(
       map(data => {
         return data;
       })

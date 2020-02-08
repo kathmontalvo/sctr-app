@@ -35,26 +35,28 @@ export class InsurancePage implements OnInit {
     private sanitizer: DomSanitizer,
     private authService: AuthService
   ) {
-    setTimeout(() => {
-      this.protectedUrl = sanitizer.bypassSecurityTrustResourceUrl(
-        this.pdfFile
-      );
-      console.log(this.protectedUrl);
-    }, 2000);
+    // setTimeout(() => {
+    //   this.protectedUrl = sanitizer.bypassSecurityTrustResourceUrl(
+    //     this.pdfFile
+    //   );
+    //   console.log(this.protectedUrl);
+    // }, 5000);
   }
 
   ngOnInit() {
     let id = parseInt(this.route.snapshot.paramMap.get("id"));
     this.insuranceId = id;
     console.log(this.insuranceId, typeof id);
+
     this.getInsuranceData(this.insuranceId);
     this.user = this.authService.getObject("user");
 
     this.segment = "details";
     this.generateQRCode();
-    const file = new Blob([this.pdfFile], { type: "application/pdf" });
-    this.fileUrl = URL.createObjectURL(file);
-    this.protectedUrl = this.sanitizer.bypassSecurityTrustUrl(this.fileUrl);
+
+    // const file = new Blob([this.pdfFile], { type: "application/pdf" });
+    // this.fileUrl = URL.createObjectURL(file);
+    // this.protectedUrl = this.sanitizer.bypassSecurityTrustUrl(this.fileUrl);
   }
 
   async openRegister(ev, key) {
@@ -70,14 +72,21 @@ export class InsurancePage implements OnInit {
 
   getInsuranceData(insuranceId) {
     this.insuranceService.getUserInsurance(insuranceId).subscribe(
-      response => {
+      async response => {
         console.log(response);
         this.authService.setObject("insurance", response["data"]);
         this.insuranceInfo = response["data"];
         this.qrcodename = this.insuranceInfo["code"];
-        this.pdfFile = this.insuranceInfo["document"];
+        // this.pdfFile = this.insuranceInfo["document"];
         this.users = this.insuranceInfo["insu_users"];
         this.sctrType = this.insuranceInfo["type"];
+
+        this.protectedUrl = await this.sanitizer.bypassSecurityTrustResourceUrl(
+          this.insuranceInfo["document"]
+        );
+        
+
+
         this.getRegister(insuranceId);
       },
       error => {

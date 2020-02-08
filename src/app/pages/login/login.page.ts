@@ -8,6 +8,8 @@ import {
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "src/app/services/user.service";
 import { Router } from "@angular/router";
+import { LoadingController } from "@ionic/angular";
+
 
 @Component({
   selector: "app-login",
@@ -16,6 +18,7 @@ import { Router } from "@angular/router";
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
+  loading: any;
   validation_messages = {
     email: [
       { type: "required", message: "El email es requerido" },
@@ -31,7 +34,9 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private loadingController: LoadingController
+
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -54,6 +59,7 @@ export class LoginPage implements OnInit {
     const grant_type = "password";
     const client_id = "2";
     const client_secret = "XrDnYGDzV8bLe0ZHWv71uKJP4vgYsCuvBQZ5fnpV";
+    this.showLoading();
 
     this.authService
       .login(
@@ -70,7 +76,8 @@ export class LoginPage implements OnInit {
             "access_token",
             response["access_token"]
           );
-          // this.getUser()
+          this.getUser()
+          this.loading.dismiss();
           this.router.navigate(["/home"]);
         },
         error => {
@@ -94,5 +101,12 @@ export class LoginPage implements OnInit {
         }
       );
     }
+  }
+  async showLoading() {
+    this.loading = await this.loadingController.create({
+      message: ""
+    });
+
+    this.loading.present();
   }
 }

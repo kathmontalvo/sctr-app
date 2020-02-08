@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "src/app/services/user.service";
-import { ToastController } from '@ionic/angular';
+import { ToastController } from "@ionic/angular";
+import { LoadingController } from "@ionic/angular";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-profile",
@@ -11,10 +13,14 @@ import { ToastController } from '@ionic/angular';
 export class ProfilePage implements OnInit {
   userInfo: object;
   file: File;
+  loading: any;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    public toastController: ToastController
+    private router: Router,
+    public toastController: ToastController,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -36,30 +42,49 @@ export class ProfilePage implements OnInit {
 
   updateUserPhoto(file) {
     this.authService.destroy("user");
-    this.userService.updateUser(file).subscribe(async res => {
-      console.log(res["data"]);
-      await this.authService.setObject("user", res["data"]);
-      this.presentToastWithOptions();
-      this.ngOnInit();
-    });
+    this.showLoading();
+
+    this.userService.updateUser(file).subscribe(
+      async res => {
+        this.loading.dismiss();
+        console.log(res["data"]);
+        await this.authService.setObject("user", res["data"]);
+        this.presentToastWithOptions();
+        this.ngOnInit();
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
   async presentToastWithOptions() {
     const toast = await this.toastController.create({
-      header: '¡Listo!',
-      message: 'Has actualizado tu foto de perfil.',
-      position: 'bottom',
+      header: "¡Listo!",
+      message: "Has actualizado tu foto de perfil.",
+      position: "bottom",
       duration: 3000,
-      mode: 'ios',
+      mode: "ios",
       buttons: [
         {
-          text: 'Cerrar',
-          role: 'cancel',
+          text: "Cerrar",
+          role: "cancel",
           handler: () => {
-            console.log('Cancel clicked');
+            console.log("Cancel clicked");
           }
         }
       ]
     });
     toast.present();
+  }
+
+  async showLoading() {
+    this.loading = await this.loadingController.create({
+      message: "Por favor, espere..."
+    });
+
+    this.loading.present();
+  }
+  navigateToHome() {
+    this.router.navigate(["/home"]);
   }
 }

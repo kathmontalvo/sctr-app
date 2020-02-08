@@ -28,10 +28,11 @@
       <ion-grid>
         <ion-row>
           <ion-col size="4" class="col-1-chart">
-            <h2 class="ion-no-margin">
-              52
+            <h2 class="ion-no-margin" *ngIf="graphicData">
+              {{graphicData.visits}}
             </h2>
             <p class="ion-no-margin">Días en planta</p>
+            <p class="ion-no-margin">en el 2020</p>
           </ion-col>
           <ion-col size="8">
             <canvas #barCanvas></canvas>
@@ -47,22 +48,7 @@
       mode="ios"
       (ionInput)="handleInput($event)"
       ></ion-searchbar>
-
-    <!-- <ion-segment [(ngModel)]="segment" color="success" mode="md">
-      <ion-segment-button value="insure" checked>
-        <ion-label>
-          MIS SEGUROS
-        </ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="shared-insure">
-        <ion-label>
-          SEGUROS COMPARTIDOS
-        </ion-label>
-      </ion-segment-button>
-    </ion-segment>  -->
-    <!-- <div [ngSwitch]="segment"> -->
     <div>
-      <!-- <ion-list *ngSwitchCase="'insure'"> -->
       <ion-list mode="ios">
         <ion-item
           class="ion-margin-vertical"
@@ -78,27 +64,13 @@
           </ion-label>
           <ion-button
             color="success"
-            [routerLink]="['/insurance', insuranceType.insurence_id]"
+            (click) = "navigateToInsurance(insuranceType.insurence_id)"
             mode="ios"
           >
             Ver más
           </ion-button>
         </ion-item>
       </ion-list>
-      <!-- <ion-list *ngSwitchCase="'shared-insure'">
-        <ion-item class="ion-margin-vertical" *ngFor="let insuranceType of sharedInsuranceTypes" lines="none">
-          <ion-avatar>
-            <img src="{{ insuranceType.insurence.insucompany.image_url}}" />
-          </ion-avatar>
-          <ion-label class="ion-padding-start">
-            <h2>SCTR {{ insuranceType.insurence.type.name }}</h2>
-            <p>{{ insuranceType.insurence.from_format }}</p>
-          </ion-label>
-          <ion-button color="success" [routerLink]="['/insurance', insuranceType.insurence_id]">
-            Ver más
-          </ion-button>
-        </ion-item>
-      </ion-list> -->
     </div>
   </div>
 

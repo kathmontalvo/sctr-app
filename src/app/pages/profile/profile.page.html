@@ -3,8 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button
         [icon]="buttonIcon"
-        defaultHref="/home"
         text=""
+        (click)="navigateToHome()"
       ></ion-back-button>
     </ion-buttons>
 
@@ -24,7 +24,7 @@
       <ion-icon name="cloud-upload"></ion-icon> Cargar foto de perfil
     </span>
   </label>
-  <input type="file" name="file" id="file" (change)="changeListener($event)"/>
+  <input type="file" name="file" id="file" (change)="changeListener($event)" />
 
   <ion-list class="ion-no-padding">
     <ion-list-header class="ion-no-padding" color="light">

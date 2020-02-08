@@ -1,7 +1,10 @@
 import { Component, ViewChild } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
+import { UserService } from "src/app/services/user.service";
 import { InsuranceService } from "../../services/insurance.service";
 import { Chart } from "chart.js";
+import { Router } from "@angular/router";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "app-home",
@@ -16,22 +19,46 @@ export class HomePage {
   insuranceTypes: Array<Object>;
   sharedInsuranceTypes: Array<Object>;
   show = true;
+  loading: any;
+  graphicData: object;
+  graphicLabels: Array<string>;
 
   private barChart: Chart;
 
   constructor(
     private authService: AuthService,
-    private insuranceService: InsuranceService
+    private router: Router,
+    private userService: UserService,
+    private insuranceService: InsuranceService,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
+    this.router.navigateByUrl('/home')
     this.segment = "insure";
     this.getInsuranceData();
+    this.getGraphicData();
   }
 
   ngAfterViewInit() {
-    this.createBarChart();
+    this.getGraphicData();
     console.log(this.insuranceTypes);
+    this.getInsuranceData();
+
+  }
+
+  getGraphicData() {
+    this.insuranceService.getGraphic().subscribe( res => {
+      this.graphicData = res["data"] // Data -> Mes: #días
+      console.log(this.graphicData);
+
+      if(this.graphicData["type"] == 0){
+        this.graphicLabels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun"];
+      } else {
+        this.graphicLabels = ["Jul", "Ago", "Set", "Oct", "Nov", "Dic"];
+      }
+      this.createBarChart();
+    })
   }
 
   createBarChart() {
@@ -40,11 +67,11 @@ export class HomePage {
       this.barChart = new Chart(this.barCanvas.nativeElement, {
         type: "line",
         data: {
-          labels: ["Jul", "Ago", "Oct", "Nov", "Dic", "Ene"],
+          labels: this.graphicLabels,
           datasets: [
             {
-              label: "# of Votes",
-              data: [12, 19, 3, 5, 2, 11],
+              label: "# visitas a planta",
+              data: this.graphicData["data"],
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",
@@ -83,14 +110,21 @@ export class HomePage {
     }
   }
   getInsuranceData() {
+    // this.getUser();
     this.insuranceService.getInsurances().subscribe(res => {
       this.insuranceTypes = res["data"];
       this.sharedInsuranceTypes = this.insuranceTypes;
-      this.user = this.insuranceTypes[0]["user"];
-      this.authService.setObject("user", this.user);
-      console.log(this.user);
+      this.user = this.authService.getObject("user").data;
+      // this.getUser();
     });
   }
+  // getUser() {
+  //   this.userService.getUser().subscribe(res => {
+  //     this.authService.setObject("user", res["data"]);
+  //     this.user = this.authService.getObject("user");
+  //     console.log(this.user);
+  //   });
+  // }
   handleInput($event) {
     const query = $event.target.value.toLowerCase();
     const items = Array.from(document.querySelector("ion-list").children);
@@ -102,4 +136,20 @@ export class HomePage {
       });
     });
   }
+  async navigateToInsurance(id) {
+    this.loading = await this.loadingController.create({
+      message: ""
+    });
+
+    this.loading.present();
+    this.router.navigate(["/insurance", id]);
+    this.loading.dismiss();
+  }
+  // async showLoading() {
+  //   this.loading = await this.loadingController.create({
+  //     message: ""
+  //   });
+
+  //   this.loading.present();
+  // }
 }
