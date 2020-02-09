@@ -34,6 +34,7 @@ export class ProfilePage implements OnInit {
   }
 
   saveProfilePhoto(file) {
+    this.showLoading()
     this.userService.uploadImage(file).subscribe(res => {
       console.log(res["data"]);
       this.updateUserPhoto(res["data"]);
@@ -42,7 +43,6 @@ export class ProfilePage implements OnInit {
 
   updateUserPhoto(file) {
     this.authService.destroy("user");
-    this.showLoading();
 
     this.userService.updateUser(file).subscribe(
       async res => {
@@ -85,6 +85,6 @@ export class ProfilePage implements OnInit {
     this.loading.present();
   }
   navigateToHome() {
-    this.router.navigate(["/home"]);
+    this.router.navigate(["/home"])
   }
 }

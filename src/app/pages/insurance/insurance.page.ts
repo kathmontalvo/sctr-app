@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { InsuranceService } from "../../services/insurance.service";
 import { AuthService } from "../../services/auth.service";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "app-insurance",
@@ -27,13 +28,15 @@ export class InsurancePage implements OnInit {
   fileUrl;
   protectedUrl: SafeUrl;
   user;
+  loading: any;
 
   constructor(
     public popOverCtrl: PopoverController,
     private route: ActivatedRoute,
     private insuranceService: InsuranceService,
     private sanitizer: DomSanitizer,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingController: LoadingController
   ) {
     // setTimeout(() => {
     //   this.protectedUrl = sanitizer.bypassSecurityTrustResourceUrl(
@@ -44,6 +47,7 @@ export class InsurancePage implements OnInit {
   }
 
   ngOnInit() {
+    this.showLoading();
     let id = parseInt(this.route.snapshot.paramMap.get("id"));
     this.insuranceId = id;
     console.log(this.insuranceId, typeof id);
@@ -74,6 +78,8 @@ export class InsurancePage implements OnInit {
     this.insuranceService.getUserInsurance(insuranceId).subscribe(
       async response => {
         console.log(response);
+        this.loading.dismiss();
+
         this.authService.setObject("insurance", response["data"]);
         this.insuranceInfo = response["data"];
         this.qrcodename = this.insuranceInfo["code"];
@@ -105,5 +111,12 @@ export class InsurancePage implements OnInit {
       this.companies = response["data"];
       console.log(this.companies);
     });
+  }
+  async showLoading() {
+    this.loading = await this.loadingController.create({
+      message: ""
+    });
+
+    this.loading.present();
   }
 }

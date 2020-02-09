@@ -17,7 +17,6 @@ export class HomePage {
   segment: string;
   user: object;
   insuranceTypes: Array<Object>;
-  sharedInsuranceTypes: Array<Object>;
   show = true;
   loading: any;
   graphicData: object;
@@ -34,31 +33,28 @@ export class HomePage {
   ) {}
 
   ngOnInit() {
-    this.router.navigateByUrl('/home')
+    this.showLoading();
+    this.router.navigateByUrl("/home");
     this.segment = "insure";
     this.getInsuranceData();
     this.getGraphicData();
   }
-
-  ngAfterViewInit() {
-    this.getGraphicData();
-    console.log(this.insuranceTypes);
-    this.getInsuranceData();
-
+  ionViewWillEnter() {
+    this.user = this.authService.getObject("user");
   }
 
   getGraphicData() {
-    this.insuranceService.getGraphic().subscribe( res => {
-      this.graphicData = res["data"] // Data -> Mes: #días
+    this.insuranceService.getGraphic().subscribe(res => {
+      this.graphicData = res["data"]; // Data -> Mes: #días
       console.log(this.graphicData);
 
-      if(this.graphicData["type"] == 0){
+      if (this.graphicData["type"] == 0) {
         this.graphicLabels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun"];
       } else {
         this.graphicLabels = ["Jul", "Ago", "Set", "Oct", "Nov", "Dic"];
       }
       this.createBarChart();
-    })
+    });
   }
 
   createBarChart() {
@@ -110,21 +106,14 @@ export class HomePage {
     }
   }
   getInsuranceData() {
-    // this.getUser();
     this.insuranceService.getInsurances().subscribe(res => {
+      this.loading.dismiss();
+
       this.insuranceTypes = res["data"];
-      this.sharedInsuranceTypes = this.insuranceTypes;
-      this.user = this.authService.getObject("user").data;
-      // this.getUser();
+      this.user = this.authService.getObject("user");
     });
   }
-  // getUser() {
-  //   this.userService.getUser().subscribe(res => {
-  //     this.authService.setObject("user", res["data"]);
-  //     this.user = this.authService.getObject("user");
-  //     console.log(this.user);
-  //   });
-  // }
+
   handleInput($event) {
     const query = $event.target.value.toLowerCase();
     const items = Array.from(document.querySelector("ion-list").children);
@@ -136,20 +125,15 @@ export class HomePage {
       });
     });
   }
-  async navigateToInsurance(id) {
+  navigateToInsurance(id) {
+    this.router.navigate(["/insurance", id]);
+  }
+
+  async showLoading() {
     this.loading = await this.loadingController.create({
       message: ""
     });
 
     this.loading.present();
-    this.router.navigate(["/insurance", id]);
-    this.loading.dismiss();
   }
-  // async showLoading() {
-  //   this.loading = await this.loadingController.create({
-  //     message: ""
-  //   });
-
-  //   this.loading.present();
-  // }
 }

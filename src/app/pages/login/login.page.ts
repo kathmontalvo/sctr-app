@@ -91,12 +91,12 @@ export class LoginPage implements OnInit {
     if (this.authService.getItem("access_token")) {
       this.userService.getUser().subscribe(
         user => {
-          this.authService.setObject("user", user);
+          this.authService.setObject("user", user["data"]);
           console.log(this.authService.getObject("user"));
           this.router.navigate(["/home"]);
         },
         error => {
-          console.log(error, "ghjkasdjasd");
+          console.log(error);
           alert("Error en las credenciales. Volver a intentar");
         }
       );
