@@ -62,7 +62,7 @@ export class InsuranceService {
 
   postRegister(insurence_id, plant_id, body, date) {
     const headers = new HttpHeaders({
-      Authorization: "Bearer " + this.authService.getItem("access_token");
+      Authorization: "Bearer " + this.authService.getItem("access_token"),
       Accept: "application/json, text/plain"
     })
     const url = "http://adm.sctr-insured.com.pe/api/user/add/history";
