@@ -12,25 +12,32 @@
       <ion-text>
         <h3>Hoy</h3>
       </ion-text>
-      <ion-button color="success">Registrar entrada</ion-button>
     </ion-card-header>
     <ion-card-content>
-      <p>Entrada: <span>{{ dateStr === today ? today.from.hour : '-' }}</span></p>
-      <p>Salida: <span>{{ dateStr === today ? today.to.hour : '-' }}</span></p>
+      <p>
+        Entrada: <span>{{ dateStr === today.from.date ? today.from.hour : "-" }}</span>
+      </p>
+      <p>
+        Salida: <span>{{ dateStr === today.to.date ? today.to.hour : "-" }}</span>
+      </p>
       <br />
-      <div>
-         Comentario: {{ dateStr === today ? today.body : '-' }}
-      </div>
-      <!-- <form class="ion-margin-vertical">
-        <textarea
+      <!-- <div>Comentario: {{ dateStr === today ? today.body : "-" }}</div> -->
+      <div>Comentario:</div>
+      <form class="ion-margin-vertical">
+        <ion-textarea
+          color="dark"
           name="comment"
           id="comment"
           cols="40"
           rows="4"
           placeholder="Añadir un comentario"
-        ></textarea>
-        <ion-button color="light">Enviar</ion-button>
-      </form> -->
+          [(ngModel)]="commentText"
+        ></ion-textarea>
+        <ion-button color="success" (click)="onRegister()"
+          >Registrar {{ dateStr !== today.from.date ? "entrada" : "salida" }}
+        </ion-button>
+        <!-- <ion-button color="light">Enviar</ion-button> -->
+      </form>
     </ion-card-content>
   </ion-card>
 
@@ -41,7 +48,7 @@
     <ion-card-content>
       Entrada: <span>{{ visit.from.hour }}</span> Salida:
       <span>{{ visit.to.hour }}</span>
-      <p>* {{ visit.body }} </p>
+      <p>* {{ visit.body }}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

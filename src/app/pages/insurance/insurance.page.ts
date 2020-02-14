@@ -64,7 +64,7 @@ export class InsurancePage implements OnInit {
   }
 
   async openRegister(ev, key) {
-    this.authService.setObject("visits", this.companies[key]["visits"]);
+    this.authService.setObject("register", this.companies[key]);
     const popover = await this.popOverCtrl.create({
       component: PopoverComponent,
       event: ev,

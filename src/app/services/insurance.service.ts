@@ -60,13 +60,13 @@ export class InsuranceService {
     return (this.data = this.http.get(url, { headers: headers }));
   }
 
-  postRegister(insurence_id, plant_id, body, date) {
+  postRegister(insurence_id, plant_id, body, date, from) {
     const headers = new HttpHeaders({
       Authorization: "Bearer " + this.authService.getItem("access_token"),
-      Accept: "application/json, text/plain"
+      // Accept: "application/json, text/plain"
     })
     const url = "http://adm.sctr-insured.com.pe/api/user/add/history";
-    return this.http.post(url, {insurence_id, plant_id, body, date}, {headers:headers}).pipe(
+    return this.http.post(url, {insurence_id, plant_id, body, date, from}, {headers:headers}).pipe(
       map(data => {
         return data;
       })

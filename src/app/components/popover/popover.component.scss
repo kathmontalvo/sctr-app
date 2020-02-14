@@ -17,11 +17,15 @@ ion-content {
   form {
     display: flex;
     flex-direction: column;
-    textarea {
-      padding: 12px;
+    ion-textarea {
+      --padding: 12px;
+      --padding-end: 10px;
+      --border-radius: 10px;
+      margin-bottom: 10px;
       border-radius: 10px;
+      border: 1px solid var(--ion-color-medium-tint)
     }
-    textarea:focus {
+    ion-textarea:focus {
       outline: none;
     }
     ion-button {
