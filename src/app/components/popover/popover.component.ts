@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { PopoverController } from "@ionic/angular";
+import { PopoverController, NavParams } from "@ionic/angular";
 import { AuthService } from "src/app/services/auth.service";
 import { InsuranceService } from "src/app/services/insurance.service";
+import { LoadingController, AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-popover",
@@ -11,8 +12,11 @@ import { InsuranceService } from "src/app/services/insurance.service";
 export class PopoverComponent implements OnInit {
   constructor(
     private popoverCtrl: PopoverController,
+    private navCtrl: NavParams,
     private authService: AuthService,
-    private insuranceService: InsuranceService
+    private insuranceService: InsuranceService,
+    private loadingController: LoadingController,
+    private alertCtrl: AlertController
   ) {}
   visits: object[];
   fromHour;
@@ -28,22 +32,27 @@ export class PopoverComponent implements OnInit {
   minutes;
   seconds;
   fullDate;
+  loading: any;
+  register: any;
+  registerBtn;
   commentText: string = "";
+  disableBtn: boolean = false;
 
   ngOnInit() {
-    const register = this.authService.getObject("register")
-    console.log(register);
-    this.visits = register["visits"];
-    const lastEl = this.visits.length - 1;
-    this.today = this.visits[lastEl];
-    console.log(this.dateStr)
+    this.register = this.navCtrl.get('register')
+    this.visits = this.navCtrl.get('register')["visits"].reverse();
+    this.today = this.visits[0];
+    this.registerBtn = this.today.from.date !== this.dateStr ? 'entrada' : 'salida';
+    if (this.registerBtn === 'salida' && this.today.to.date === this.dateStr) {
+      this.registerBtn = 'entrada';
+      this.disableBtn = true
+    }
+    console.log(this.dateStr, this.visits)
   }
 
   onClick() {
     this.popoverCtrl.dismiss({});
   }
-
-
 
   onRegister() {
     this.d = new Date();
@@ -60,7 +69,7 @@ export class PopoverComponent implements OnInit {
     console.log(this.dateStr)
     
     const insurence_id = this.authService.getObject("insurance").id;
-    const plant_id= this.authService.getObject("register").id;
+    const plant_id= this.register.id;
     const body= this.commentText;
     const date = this.fullDate;
 
@@ -68,12 +77,35 @@ export class PopoverComponent implements OnInit {
 
     this.insuranceService.postRegister(insurence_id, plant_id, body, date, date).subscribe(
       response => {
-        alert("updated")
+        this.presentAlert('¡Excelente!', 'Se ha registrado correctamente a los colaboradores.', 'Aceptar');
+        this.onClick;
       },
       error => {
-        alert(error)
+        this.presentAlert(
+          "Error",
+          "Hubo un error al realizar esta acción. Intente nuevamente.",
+          "Aceptar"
+        );
       }
     )
   }
+  async presentAlert(title, message, btn) {
+    const alert = await this.alertCtrl.create({
+      header: title,
+      message: message,
+      buttons: [
+        {
+          text: btn,
+        },
+      ],
+    });
+    await alert.present();
+  };
+  async showLoading() {
+    this.loading = await this.loadingController.create({
+      message: ""
+    });
 
+    this.loading.present();
+  }
 }

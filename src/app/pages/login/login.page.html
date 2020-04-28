@@ -4,8 +4,9 @@
       <div class="ion-padding ion-text-center">
         <div class="app-name">
           <img src="../../../assets/imgs/logo_sctr.png" alt="Logo SCTR" />
+          <h2 class="ion-no-margin">App Usuarios</h2>
         </div>
-        <ion-text color="dark">
+        <ion-text color="dark ion-margin">
           <h5>Ingresa a tu cuenta</h5>
         </ion-text>
       </div>
@@ -35,16 +36,7 @@
             ¿Olvidaste tu contraseña?
           </a>
         </div>
-        <!-- <ion-grid class="ion-no-padding">
-          <ion-row>
-            <ion-col size="12" class="ion-no-padding">
-              <ion-button expand="block" color="medium" href="/register">CREAR CUENTA</ion-button>
-            </ion-col>
-            <ion-col size="6" class="ion-no-padding">
-            </ion-col>
-          </ion-row>
-        </ion-grid> -->
-        <ion-button expand="block" color="success" [disabled]="!loginForm.valid" type="submit">INGRESAR</ion-button>
+        <ion-button expand="block" color="success" id="login-btn" [disabled]="!loginForm.valid" type="submit">INGRESAR</ion-button>
       </form>
     </section>
     <section class="ion-padding ion-text-center bottom-content">

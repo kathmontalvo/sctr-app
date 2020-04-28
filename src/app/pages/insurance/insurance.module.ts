@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { NgxQRCodeModule } from "ngx-qrcode2";
 
 import { IonicModule } from "@ionic/angular";
+import { ComponentsModule } from '../../components/components.module';
 
 import { InsurancePage } from "./insurance.page";
 
@@ -20,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     RouterModule.forChild(routes),
     NgxQRCodeModule
   ],

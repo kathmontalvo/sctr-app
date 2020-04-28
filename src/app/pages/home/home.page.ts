@@ -4,7 +4,7 @@ import { UserService } from "src/app/services/user.service";
 import { InsuranceService } from "../../services/insurance.service";
 import { Chart } from "chart.js";
 import { Router } from "@angular/router";
-import { LoadingController } from "@ionic/angular";
+import { LoadingController, AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-home",
@@ -29,7 +29,8 @@ export class HomePage {
     private router: Router,
     private userService: UserService,
     private insuranceService: InsuranceService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -54,6 +55,12 @@ export class HomePage {
         this.graphicLabels = ["Jul", "Ago", "Set", "Oct", "Nov", "Dic"];
       }
       this.createBarChart();
+    }, err => {
+      this.presentAlert(
+        "Error",
+        "Hubo un error al obtener la información del gráfico.",
+        "Continuar"
+      );
     });
   }
 
@@ -111,6 +118,14 @@ export class HomePage {
 
       this.insuranceTypes = res["data"];
       this.user = this.authService.getObject("user");
+    }, err => {
+      this.loading.dismiss();
+      this.presentAlert(
+        "Error",
+        "Hubo un error al obtener la información.",
+        "Aceptar"
+      );
+      this.router.navigate(["/login"]);
     });
   }
 
@@ -136,4 +151,16 @@ export class HomePage {
 
     this.loading.present();
   }
+  async presentAlert(title, message, btn) {
+    const alert = await this.alertCtrl.create({
+      header: title,
+      message: message,
+      buttons: [
+        {
+          text: btn,
+        },
+      ],
+    });
+    await alert.present();
+  };
 }

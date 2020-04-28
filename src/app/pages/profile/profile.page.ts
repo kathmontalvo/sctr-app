@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "src/app/services/user.service";
 import { ToastController } from "@ionic/angular";
-import { LoadingController } from "@ionic/angular";
+import { LoadingController, AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
 
 @Component({
@@ -20,7 +20,8 @@ export class ProfilePage implements OnInit {
     private userService: UserService,
     private router: Router,
     public toastController: ToastController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -38,6 +39,13 @@ export class ProfilePage implements OnInit {
     this.userService.uploadImage(file).subscribe(res => {
       console.log(res["data"]);
       this.updateUserPhoto(res["data"]);
+    }, err => {
+      this.loading.dismiss();
+      this.presentAlert(
+        "Error",
+        "Hubo un error al actualizar la imagen. Intente nuevamente.",
+        "Aceptar"
+      );
     });
   }
 
@@ -54,6 +62,11 @@ export class ProfilePage implements OnInit {
       },
       err => {
         console.log(err);
+        this.presentAlert(
+          "Error",
+          "Hubo un error al actualizar la imagen. Intente nuevamente.",
+          "Aceptar"
+        );
       }
     );
   }
@@ -87,4 +100,24 @@ export class ProfilePage implements OnInit {
   navigateToHome() {
     this.router.navigate(["/home"])
   }
+  downloadPdf(pdfUrl) {
+    window.open(pdfUrl);
+  }
+  logOut() {
+    this.authService.destroy('access_token');
+    this.authService.destroy('user');
+    this.router.navigate(["/login"]);
+  }
+  async presentAlert(title, message, btn) {
+    const alert = await this.alertCtrl.create({
+      header: title,
+      message: message,
+      buttons: [
+        {
+          text: btn,
+        },
+      ],
+    });
+    await alert.present();
+  };
 }

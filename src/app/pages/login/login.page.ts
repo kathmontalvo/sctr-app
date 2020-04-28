@@ -8,7 +8,7 @@ import {
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "src/app/services/user.service";
 import { Router } from "@angular/router";
-import { LoadingController } from "@ionic/angular";
+import { LoadingController, AlertController } from "@ionic/angular";
 
 
 @Component({
@@ -35,8 +35,8 @@ export class LoginPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private loadingController: LoadingController
-
+    private loadingController: LoadingController,
+    private alertCtrl: AlertController
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -60,6 +60,7 @@ export class LoginPage implements OnInit {
     const client_id = "2";
     const client_secret = "XrDnYGDzV8bLe0ZHWv71uKJP4vgYsCuvBQZ5fnpV";
     this.showLoading();
+    const btn = document.getElementById("login-btn");
 
     this.authService
       .login(
@@ -76,14 +77,18 @@ export class LoginPage implements OnInit {
             "access_token",
             response["access_token"]
           );
+          btn["disabled"] = true;
           this.getUser()
           this.loading.dismiss();
           this.router.navigate(["/home"]);
         },
         error => {
-          console.log(error, "ghjkasdjasd");
-          const message = error.message + " // " + error.statusText;
-          alert(message);
+          this.loading.dismiss();
+          this.presentAlert(
+            "Error",
+            "Usuario y/o contraseña incorrectos. Verifique la información.",
+            "Aceptar"
+          );
         }
       );
   }
@@ -91,17 +96,36 @@ export class LoginPage implements OnInit {
     if (this.authService.getItem("access_token")) {
       this.userService.getUser().subscribe(
         user => {
+          this.loading.dismiss();
           this.authService.setObject("user", user["data"]);
           console.log(this.authService.getObject("user"));
           this.router.navigate(["/home"]);
         },
         error => {
           console.log(error);
-          alert("Error en las credenciales. Volver a intentar");
+          this.loading.dismiss();
+          this.presentAlert(
+            "Error",
+            "Error en las credenciales. Volver a intentar.",
+            "Aceptar"
+          );
         }
       );
     }
   }
+  async presentAlert(title, message, btn) {
+    const alert = await this.alertCtrl.create({
+      header: title,
+      message: message,
+      buttons: [
+        {
+          text: btn,
+        },
+      ],
+    });
+    await alert.present();
+  };
+
   async showLoading() {
     this.loading = await this.loadingController.create({
       message: ""
