@@ -11,10 +11,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { PopoverComponent } from './components/popover/popover.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ModalPdfComponent } from './components/modal-pdf/modal-pdf.component';
 
 @NgModule({
-  declarations: [AppComponent, PopoverComponent],
-  entryComponents: [PopoverComponent],
+  declarations: [AppComponent, PopoverComponent, ModalPdfComponent],
+  entryComponents: [PopoverComponent, ModalPdfComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   exports: [PopoverComponent],
   providers: [StatusBar, SplashScreen, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

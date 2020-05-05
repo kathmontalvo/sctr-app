@@ -87,7 +87,7 @@
     </ion-list-header>
     <ion-item
       class="ion-no-padding"
-      (click)="downloadPdf('../../../assets/docs/terms_conditions.pdf')"
+      (click)="showPdf('terms', 'Términos y condiciones')"
     >
       <ion-icon name="document"></ion-icon>
       <ion-label class="ion-padding-start">
@@ -96,7 +96,8 @@
     </ion-item>
     <ion-item
       class="ion-no-padding"
-      (click)="downloadPdf('../../../assets/docs/privacy_politics.pdf')"
+      (click)="showPdf('policity', 'Política de privacidad')"
+
     >
       <ion-icon name="alert"></ion-icon>
       <ion-label class="ion-padding-start">

@@ -46,9 +46,16 @@
       <ion-card-title>{{ visit.from.date }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      Entrada: <span>{{ visit.from.hour }}</span> Salida:
-      <span>{{ visit.to.hour }}</span>
-      <p>* {{ visit.body }}</p>
+      Entrada: <span>{{ visit.from.hour }}</span> 
+      Salida:  <span>{{ visit.to.hour }}</span>
+      <div class="show container-comment ion-padding-top" *ngIf="!visit.edit">
+        <p class="container-comment__text">* {{ visit.body }}</p>
+        <ion-icon name="ios-create" title="Añadir comentario" (click)="changeEdit(visit.id, true)"></ion-icon>
+      </div>
+      <div class="edit container-comment" *ngIf="visit.edit">
+        <ion-input placeholder="Añade un comentario..."  (ionChange)="changeInput($event)" (keyup.enter)="handleEditing(visit.id, false)" ></ion-input>
+        <ion-icon name="add-circle" title="Añadir comentario" (click)="handleEditing(visit.id, false)" ></ion-icon>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

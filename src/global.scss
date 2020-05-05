@@ -39,3 +39,10 @@
 ion-toast {
   --button-color: var(--ion-color-success);
 }
+
+ion-item{
+  --background: var(--ion-color-white);
+}
+ion-item:hover{
+  --background: var(--ion-color-light-tint);
+}

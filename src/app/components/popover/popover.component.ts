@@ -13,16 +13,20 @@ export class PopoverComponent implements OnInit {
   constructor(
     private popoverCtrl: PopoverController,
     private navCtrl: NavParams,
-    private authService: AuthService,
     private insuranceService: InsuranceService,
     private loadingController: LoadingController,
     private alertCtrl: AlertController
   ) {}
   visits: object[];
+  visitId;
+  inputCode;
+  insuId;
+  type;
   fromHour;
   toHour;
   bodyNow;
   today;
+  registerKey;
   d = new Date();
   dateNow = ("0" + this.d.getDate()).slice(-2);
   month = ("0" + (this.d.getMonth() + 1)).slice(-2); // Since getMonth() returns month from 0-11 not 1-12
@@ -39,15 +43,23 @@ export class PopoverComponent implements OnInit {
   disableBtn: boolean = false;
 
   ngOnInit() {
-    this.register = this.navCtrl.get('register')
-    this.visits = this.navCtrl.get('register')["visits"].reverse();
-    this.today = this.visits[0];
+    this.register = this.navCtrl.get('register');
+    this.registerKey = this.navCtrl.get('key');
+    this.loading = this.navCtrl.get('loading');
+    this.loading.dismiss();
+    this.insuId = this.register["id"];
+    const visits = this.register["visits"];
+    this.today = visits[0];
+    this.initiating(visits, false);
     this.registerBtn = this.today.from.date !== this.dateStr ? 'entrada' : 'salida';
+    this.type = this.today.from.date !== this.dateStr ? 0 : 1;
     if (this.registerBtn === 'salida' && this.today.to.date === this.dateStr) {
       this.registerBtn = 'entrada';
-      this.disableBtn = true
+      this.type = 0;
+      // this.disableBtn = true
     }
-    console.log(this.dateStr, this.visits)
+
+    console.log(this.dateStr, visits)
   }
 
   onClick() {
@@ -68,17 +80,16 @@ export class PopoverComponent implements OnInit {
     console.log(this.fullDate)
     console.log(this.dateStr)
     
-    const insurence_id = this.authService.getObject("insurance").id;
     const plant_id= this.register.id;
-    const body= this.commentText;
+    const body= this.commentText || '-';
     const date = this.fullDate;
+    const type = this.type;
+    console.log(this.insuId, plant_id, body, date)
 
-    console.log(insurence_id, plant_id, body, date)
-
-    this.insuranceService.postRegister(insurence_id, plant_id, body, date, date).subscribe(
+    this.insuranceService.postRegister(this.insuId, plant_id, body, date, date, type).subscribe(
       response => {
         this.presentAlert('¡Excelente!', 'Se ha registrado correctamente a los colaboradores.', 'Aceptar');
-        this.onClick;
+        this.onClick();
       },
       error => {
         this.presentAlert(
@@ -86,9 +97,87 @@ export class PopoverComponent implements OnInit {
           "Hubo un error al realizar esta acción. Intente nuevamente.",
           "Aceptar"
         );
+        this.onClick();
       }
     )
   }
+
+  initiating(register, bool) {
+    console.log(register)
+    if (register.length !== 0) {
+      // const visitas = register;
+      this.visits = register.map((el) => {
+        let editing = false;
+        if (this.visitId == el["id"]) {
+          editing = bool ? !editing : editing;
+        }
+
+        return {
+          id: el["id"],
+          body: el["body"],
+          from: el["from"],
+          to: el["to"],
+          edit: editing,
+        };
+      });
+      // console.log(register, this.visits);
+    }
+  }
+
+  changeEdit(id, bool) {
+    this.visitId = id;
+    console.log(this.visitId);
+    this.initiating(this.visits, bool);
+  }
+
+  changeInput($event) {
+    this.inputCode = $event.target.value;
+    console.log(this.inputCode);
+  }
+
+  setComment(reg_id, body) {
+    this.showLoading();
+    this.insuranceService.setComments(reg_id, body).subscribe(
+      (res) => {
+        console.log(res);
+        this.insuranceService
+          .getInsuranceRegister(this.insuId)
+          .subscribe(
+            (res) => {
+              this.loading.dismiss();
+              this.inputCode = "";
+              this.visits = res["data"][this.registerKey].visits;
+              this.initiating(this.visits, false);
+            },
+            (err) => {
+              this.loading.dismiss();
+              this.presentAlert(
+                "Error",
+                "Hubo un error al realizar esta acción. Intente nuevamente.",
+                "Aceptar"
+              );
+              console.error(err);
+            }
+          );
+      },
+      error => {
+        this.loading.dismiss();
+        this.presentAlert(
+          "Error",
+          "Hubo un error al realizar esta acción. Intente nuevamente.",
+          "Aceptar"
+        );
+      }
+    );
+  }
+
+  handleEditing(insu_id, bool) {
+    this.changeEdit(insu_id, bool);
+    if (this.inputCode) {
+      this.setComment(insu_id, this.inputCode);
+    }
+  }
+
   async presentAlert(title, message, btn) {
     const alert = await this.alertCtrl.create({
       header: title,

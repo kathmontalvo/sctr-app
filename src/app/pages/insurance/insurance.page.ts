@@ -48,20 +48,26 @@ export class InsurancePage implements OnInit {
 
     this.getInsuranceData(this.insuranceId);
     this.user = this.authService.getObject("user");
-
     this.segment = "details";
     this.generateQRCode();
   }
 
-  async openRegister(ev, key) {
-    const popover = await this.popOverCtrl.create({
-      component: PopoverComponent,
-      componentProps: { register: this.companies[key]},
-      event: ev,
-      cssClass: "popover-style",
-      translucent: true
+  openRegister(ev, key) {
+    this.showLoading();
+    this.getRegister(this.insuranceId).subscribe(async response => {
+      const companies = response["data"];
+      const popover = await this.popOverCtrl.create({
+        component: PopoverComponent,
+        componentProps: { register: companies[key], id: this.insuranceId, loading: this.loading, key: key},
+        event: ev,
+        cssClass: "popover-style",
+        translucent: true
+      });
+      return await popover.present();
+    }, error => {
+      this.loading.dismiss();
+      this.presentAlert('Error', 'Ocurrió un error al obtener la información. Intentelo nuevamente.', 'Aceptar');
     });
-    return await popover.present();
   }
 
   getInsuranceData(insuranceId) {
@@ -75,11 +81,16 @@ export class InsurancePage implements OnInit {
         this.qrcodename = this.insuranceInfo["code"];
         this.users = this.insuranceInfo["insu_users"];
         this.sctrType = this.insuranceInfo["type"];
-
+        this.getRegister(insuranceId).subscribe(response => {
+          this.companies = response["data"];
+          console.log(this.companies);
+        }, error => {
+          this.loading.dismiss();
+          this.presentAlert('Error', 'Ocurrió un error al obtener la información. Intentelo nuevamente.', 'Aceptar');
+        });
         this.protectedUrl = await this.sanitizer.bypassSecurityTrustResourceUrl(
           `https://docs.google.com/viewer?url=${this.insuranceInfo["document"]}&embedded=true`
         );
-        this.getRegister(insuranceId);
       },
       error => {
         this.loading.dismiss();
@@ -93,13 +104,7 @@ export class InsurancePage implements OnInit {
     this.display = true;
   }
   getRegister(id) {
-    this.insuranceService.getInsuranceRegister(id).subscribe(response => {
-      this.companies = response["data"];
-      console.log(this.companies);
-    }, error => {
-      this.loading.dismiss();
-      this.presentAlert('Error', 'Ocurrió un error al obtener la información. Intentelo nuevamente.', 'Aceptar');
-    });
+    return this.insuranceService.getInsuranceRegister(id);
   }
 
   async presentAlert(title, message, btn) {

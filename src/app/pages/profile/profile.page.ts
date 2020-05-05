@@ -4,6 +4,8 @@ import { UserService } from "src/app/services/user.service";
 import { ToastController } from "@ionic/angular";
 import { LoadingController, AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
+import { ModalController } from '@ionic/angular';
+import { ModalPdfComponent } from '../../components/modal-pdf/modal-pdf.component';
 
 @Component({
   selector: "app-profile",
@@ -21,7 +23,8 @@ export class ProfilePage implements OnInit {
     private router: Router,
     public toastController: ToastController,
     private loadingController: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -120,4 +123,12 @@ export class ProfilePage implements OnInit {
     });
     await alert.present();
   };
+
+  async showPdf(param, title) {
+    const modal = await this.modalController.create({
+      component: ModalPdfComponent,
+      componentProps: {param, title }
+    });
+    return await modal.present();
+  }
 }

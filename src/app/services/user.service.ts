@@ -70,4 +70,9 @@ export class UserService {
       })
     );
   }
+  getDocs(doc){
+    const headers = new HttpHeaders();
+    const url = `http://adm.sctr-insured.com.pe/api/guest/${doc}`;
+    return this.http.get(url, { headers: headers });
+  }
 }
